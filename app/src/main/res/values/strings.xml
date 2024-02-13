@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Whatsweb Scanner</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="qr_scanner">QR Scanner</string>
+    <string name="chat">Chat</string>
+    <string name="images">Images</string>
+    <string name="videos">Videos</string>
+    <string name="audios">Audios</string>
+    <string name="documents">Documents</string>
+    <string name="_40_documents">40 Documents</string>
+    <string name="_60_voices">60 Voices</string>
+    <string name="voices">Voices</string>
+    <string name="music">Music</string>
+    <string name="_20_messages">20 Messages</string>
+    <string name="_102_photos">102 Photos</string>
+    <string name="_60_videos">60 Videos</string>
+    <string name="_60_audios">60 Audios</string>
+    <string name="copy_text">Copy text</string>
+    <string name="copy">Copy</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+</resources>

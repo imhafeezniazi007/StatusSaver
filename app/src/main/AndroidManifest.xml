@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.StatusSaver"
+        tools:targetApi="31">
+        <activity
+            android:name=".Activities.BusinessStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SavedStatusActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.QRScannerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.AudioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DocumentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.VideoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.WhatsDeleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.DirectChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.MainFeaturesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.WebViewActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8553911388603017~3170772403" />
+
+        <activity
+            android:name=".Activities.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+    </application>
+
+</manifest>
