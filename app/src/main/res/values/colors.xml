@@ -17,4 +17,6 @@
     <color name="color_dark_blue_text">#313658</color>
     <color name="color_red_text">#C34351</color>
     <color name="color_primary_green">#00CC77</color>
+    <color name="color_parrot_green">#00FF75</color>
+    <color name="color_off_white">#F6F6F6</color>
 </resources>

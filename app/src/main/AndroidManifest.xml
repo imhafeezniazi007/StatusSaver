@@ -23,6 +23,15 @@
         android:theme="@style/Theme.StatusSaver"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.ConfirmationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.SubscriptionActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.BusinessStatusActivity"
             android:exported="false" />
         <activity
