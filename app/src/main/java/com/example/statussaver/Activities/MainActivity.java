@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.example.statussaver.Fragments.ImageFragment;
 import com.example.statussaver.Fragments.ImageStatusViewFragment;
 import com.example.statussaver.Fragments.VideoFragment;
 import com.example.statussaver.Fragments.VideoStatusViewFragment;
+import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -38,7 +40,7 @@ import com.example.statussaver.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding activityMainBinding;
-    private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
         setSupportActionBar(activityMainBinding.toolbar);
+        activityMainBinding.toolbar.setTitle("Status Saver");
 
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Pics"));
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Videos"));
+        activityMainBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
 
         replaceFragment(new ImageFragment());
 
@@ -77,13 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    READ_STORAGE_PERMISSION_REQUEST_CODE);
-        }
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -92,31 +90,14 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-            case READ_STORAGE_PERMISSION_REQUEST_CODE: {
-                // Check if the permission was granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted, you can now access the storage
-                } else {
-                    Toast.makeText(this, "permission not granted", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-        }
-    }
-
-
-    public void navigateToThirdFragment(String bitmap, int position) {
+    public void navigateToThirdFragment(Status status) {
         Bundle bundle = new Bundle();
-        bundle.putString("image_path", bitmap);
-        bundle.putInt("position", position);
+        bundle.putString("image_path", status.getPath());
+        bundle.putString("title", status.getTitle());
 
 
-        ImageStatusViewFragment imageStatusViewFragment = new ImageStatusViewFragment();
+        ImageStatusViewFragment imageStatusViewFragment = new ImageStatusViewFragment(status);
         imageStatusViewFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -125,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
         }
 
-    public void navigateToForthFragment(String path) {
+    public void navigateToForthFragment(Status status) {
         Bundle bundle = new Bundle();
-        bundle.putString("path", path);
+        bundle.putString("path", status.getPath());
 
 
-        VideoStatusViewFragment videoStatusViewFragment = new VideoStatusViewFragment();
+        VideoStatusViewFragment videoStatusViewFragment = new VideoStatusViewFragment(status);
         videoStatusViewFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

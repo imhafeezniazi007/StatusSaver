@@ -1,5 +1,6 @@
 package com.example.statussaver.Fragments;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,22 +11,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
+import android.widget.Toast;
 
 import com.example.statussaver.Adapters.BusinessVideoAdapter;
 import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.databinding.FragmentBusinessVideoViewBinding;
 import com.example.statussaver.databinding.FragmentVideoStatusViewBinding;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.List;
 
 public class BusinessVideoViewFragment extends Fragment {
 
     FragmentBusinessVideoViewBinding fragmentBusinessVideoViewBinding;
     BusinessVideoFragment videoAdapter;
+    Status bVideoStatus;
+    List<Status> statusList;
 
-    public BusinessVideoViewFragment() {
+
+    public BusinessVideoViewFragment(List<Status> statusList) {
+        this.statusList = statusList;
+    }
+
+    public BusinessVideoViewFragment(Status status) {
+        this.bVideoStatus = status;
     }
 
 
@@ -46,13 +61,13 @@ public class BusinessVideoViewFragment extends Fragment {
 
 
             File videoFile = new File(path);
-            // Parse the URI string into a Uri object
             Uri uri = Uri.fromFile(videoFile);
 
             fragmentBusinessVideoViewBinding.videoView.setVideoURI(uri);
             MediaController mediaController = new MediaController(requireActivity());
             mediaController.setAnchorView(fragmentBusinessVideoViewBinding.videoView);
             fragmentBusinessVideoViewBinding.videoView.setMediaController(mediaController);
+            fragmentBusinessVideoViewBinding.videoView.start();
         }
 
 
@@ -61,21 +76,57 @@ public class BusinessVideoViewFragment extends Fragment {
             public void onClick(View v) {
                     Bundle bundle = getArguments();
                     if (bundle != null) {
-                        Status status = (Status) bundle.getSerializable("key");
-                    if (videoAdapter != null)
-                    {
                         try {
-                            videoAdapter.downloadVideo(status);
+                            downloadVideo(bVideoStatus);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    } else {
-                        Log.e("BusinessVideoViewFragment", "VideoAdapter is null");
-                    }
                 }
             }
         });
 
         return view;
+    }
+
+    public void downloadVideo(Status status) throws IOException {
+        File file = new File(Consts.APP_DIR_BUSINESS);
+        if (!file.exists())
+        {
+            file.mkdirs();
+        }
+        File destFile = new File(file+File.separator + status.getTitle());
+        if (destFile.exists())
+        {
+            destFile.delete();
+        }
+
+        copyFile(status.getFile(),destFile);
+
+        Toast.makeText(getContext(), "Download complete...", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(destFile));
+        getActivity().sendBroadcast(intent);
+    }
+
+    private void copyFile(File file, File destFile) throws IOException {
+        if (!destFile.getParentFile().exists())
+        {
+            destFile.getParentFile().mkdirs();
+        }
+        if (!destFile.exists())
+        {
+            destFile.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        source = new FileInputStream(file).getChannel();
+        destination = new FileOutputStream(destFile).getChannel();
+        destination.transferFrom(source,0,source.size());
+
+        source.close();
+        destination.close();
     }
 }

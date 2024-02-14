@@ -48,17 +48,15 @@ public class BusinessVideoAdapter extends RecyclerView.Adapter<BusinessVideoAdap
             @Override
             public void onClick(View view) {
 
-                // Status status = statusList.get(holder.getAbsoluteAdapterPosition());
                 int position = holder.getAbsoluteAdapterPosition();
 
-                if (context instanceof MainActivity) {
+                if (context instanceof BusinessStatusActivity) {
                     if (status.getThumbnail() != null) {
 
                         if (status.isVideo()) {
 
-                            String path = status.getFile().getAbsolutePath();
 
-                            ((BusinessStatusActivity) context).navigateToForthFragment(path);
+                            ((BusinessStatusActivity) context).navigateToForthFragment(status);
 
                         }else {
                             Log.e("FirstFragment", "Not a video");
@@ -67,15 +65,7 @@ public class BusinessVideoAdapter extends RecyclerView.Adapter<BusinessVideoAdap
                         Log.e("FirstFragment", "Thumbnail not found");
                     }
                 }
-                //                    Status status = statusList.get(getAdapterPosition());
-//                    if (status!=null)
-//                    {
-//                        try {
-//                            imageFragment.downloadImage(status);
-//                        } catch (IOException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
+
 
             }
         });
@@ -93,21 +83,7 @@ public class BusinessVideoAdapter extends RecyclerView.Adapter<BusinessVideoAdap
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemStatusBinding.bind(itemView);
-//
-//                binding.imageThumbnail.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Status status = statusList.get(getAdapterPosition());
-//                        if (status!=null)
-//                        {
-//                            try {
-//                                videoFragment.downloadVideo(status);
-//                            } catch (IOException e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                        }
-//                    }
-//                });
+
         }
 
     }

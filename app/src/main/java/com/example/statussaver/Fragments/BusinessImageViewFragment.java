@@ -1,7 +1,9 @@
 package com.example.statussaver.Fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,19 +12,36 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.statussaver.Adapters.BusinessImageAdapter;
 import com.example.statussaver.Adapters.ImageAdapter;
+import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.databinding.FragmentBusinessImageViewBinding;
 import com.example.statussaver.databinding.FragmentImageStatusViewBinding;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.util.List;
 
 public class BusinessImageViewFragment extends Fragment {
 
     FragmentBusinessImageViewBinding fragmentBusinessImageViewBinding;
     BusinessImageAdapter imageAdapter;
+    Status bStatus;
+    List<Status> bStatusList;
 
-    public BusinessImageViewFragment() {
+    public BusinessImageViewFragment(List<Status> statusList) {
+        this.bStatusList = statusList;
+    }
+
+    public BusinessImageViewFragment(Status status) {
+        this.bStatus = status;
     }
 
 
@@ -57,16 +76,58 @@ public class BusinessImageViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (getArguments() != null) {
-                    int position = getArguments().getInt("position");
-                    if (imageAdapter != null)
-                    {
-                        imageAdapter.downloadImage(position);
-                    } else {
-                        Log.e("ImageStatusViewFragment", "ImageAdapter is null");
+                    try {
+                        downloadImage(bStatus);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
+
                 }
             }
         });
         return view;
+    }
+
+
+    public void downloadImage(Status status) throws IOException {
+        File file = new File(Consts.APP_DIR_BUSINESS);
+        if (!file.exists())
+        {
+            file.mkdirs();
+        }
+        File destFile = new File(file+File.separator + status.getTitle());
+        if (destFile.exists())
+        {
+            destFile.delete();
+        }
+
+        copyFile(status.getFile(),destFile);
+
+        Toast.makeText(getContext(), "Download complete...", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(Uri.fromFile(destFile));
+        getActivity().sendBroadcast(intent);
+    }
+
+    private void copyFile(File file, File destFile) throws IOException {
+        if (!destFile.getParentFile().exists())
+        {
+            destFile.getParentFile().mkdirs();
+        }
+        if (!destFile.exists())
+        {
+            destFile.createNewFile();
+        }
+
+        FileChannel source = null;
+        FileChannel destination = null;
+
+        source = new FileInputStream(file).getChannel();
+        destination = new FileOutputStream(destFile).getChannel();
+        destination.transferFrom(source,0,source.size());
+
+        source.close();
+        destination.close();
     }
 }

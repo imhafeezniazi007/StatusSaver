@@ -54,7 +54,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     Status status = statusList.get(position);
                     if (status != null && status.getThumbnail() != null) {
                         String path = status.getPath();
-                        ((MainActivity) context).navigateToThirdFragment(path, position);
+                        ((MainActivity) context).navigateToThirdFragment(status);
                     } else {
                         Log.e("ImageAdapter", "Invalid status or thumbnail is null");
                     }
@@ -64,18 +64,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             }
         });
     }
-
-    public void downloadImage(int position) {
-        Status status = statusList.get(position);
-        if (status != null) {
-            try {
-                imageFragment.downloadImage(status);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     @Override
     public int getItemCount() {
         return statusList.size();

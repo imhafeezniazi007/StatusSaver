@@ -40,7 +40,6 @@ import java.util.Arrays;
 
 public class BusinessImageFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     ArrayList<Status> arrayList;
     BusinessImageAdapter businessImageAdapter;
     Handler handler = new Handler();
@@ -106,6 +105,7 @@ public class BusinessImageFragment extends Fragment {
                             public void run() {
                                 fragmentBusinessImageBinding.imageProgressBar.setVisibility(View.GONE);
                                 businessImageAdapter = new BusinessImageAdapter(arrayList, getContext(),BusinessImageFragment.this);
+                                new BusinessImageViewFragment(arrayList);
                                 fragmentBusinessImageBinding.imageRecyclerView.setAdapter(businessImageAdapter);
                                 businessImageAdapter.notifyDataSetChanged();
                             }
@@ -139,49 +139,6 @@ public class BusinessImageFragment extends Fragment {
                     ,Consts.THUMBSIZE
                     ,Consts.THUMBSIZE);
         }
-    }
-
-
-    public void downloadImage(Status status) throws IOException {
-        File file = new File(Consts.APP_DIR_BUSINESS);
-        if (!file.exists())
-        {
-            file.mkdirs();
-        }
-        File destFile = new File(file+File.separator + status.getTitle());
-        if (destFile.exists())
-        {
-            destFile.delete();
-        }
-
-        copyFile(status.getFile(),destFile);
-
-        Toast.makeText(getContext(), "Download complete...", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(Uri.fromFile(destFile));
-        getActivity().sendBroadcast(intent);
-    }
-
-    private void copyFile(File file, File destFile) throws IOException {
-        if (!destFile.getParentFile().exists())
-        {
-            destFile.getParentFile().mkdirs();
-        }
-        if (!destFile.exists())
-        {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        source = new FileInputStream(file).getChannel();
-        destination = new FileOutputStream(destFile).getChannel();
-        destination.transferFrom(source,0,source.size());
-
-        source.close();
-        destination.close();
     }
 
 }

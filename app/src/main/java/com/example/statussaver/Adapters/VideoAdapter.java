@@ -57,9 +57,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
                         if (status.isVideo()) {
 
-                            String path = status.getFile().getAbsolutePath();
 
-                            ((MainActivity) context).navigateToForthFragment(path);
+                            ((MainActivity) context).navigateToForthFragment(status);
 
                         }else {
                             Log.e("FirstFragment", "Not a video");
@@ -68,15 +67,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                         Log.e("FirstFragment", "Thumbnail not found");
                     }
                 }
-                //                    Status status = statusList.get(getAdapterPosition());
-//                    if (status!=null)
-//                    {
-//                        try {
-//                            imageFragment.downloadImage(status);
-//                        } catch (IOException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
 
             }
         });
@@ -94,7 +84,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
             public VideoViewHolder(@NonNull View itemView) {
                 super(itemView);
                 binding = ItemStatusBinding.bind(itemView);
-//
+
+                //code to download video on item click
 //                binding.imageThumbnail.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View view) {

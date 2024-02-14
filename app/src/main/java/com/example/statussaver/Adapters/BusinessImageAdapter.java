@@ -50,7 +50,7 @@ public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewTyp
         Status status = statusList.get(position);
         if (status != null && status.getThumbnail() != null) {
         String path = status.getPath();
-        ((BusinessStatusActivity) context).navigateToThirdFragment(path, position);
+        ((BusinessStatusActivity) context).navigateToThirdFragment(status);
         } else {
         Log.e("ImageAdapter", "Invalid status or thumbnail is null");
         }
@@ -60,17 +60,6 @@ public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewTyp
         }
         });
         }
-
-    public void downloadImage(int position) {
-        Status status = statusList.get(position);
-        if (status != null) {
-        try {
-            businessImageFragment.downloadImage(status);
-        } catch (IOException e) {
-        throw new RuntimeException(e);
-        }
-        }
-    }
 
 @Override
 public int getItemCount() {

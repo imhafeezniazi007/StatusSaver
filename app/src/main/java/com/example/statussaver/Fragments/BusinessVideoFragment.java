@@ -101,6 +101,7 @@ public class BusinessVideoFragment extends Fragment {
                             public void run() {
                                 binding.videoProgressBar.setVisibility(View.GONE);
                                 videoAdapter = new BusinessVideoAdapter(videoArrayList, getContext(),BusinessVideoFragment.this);
+                                new BusinessVideoViewFragment(videoArrayList);
                                 binding.videoRecyclerView.setAdapter(videoAdapter);
                                 videoAdapter.notifyDataSetChanged();
                             }
@@ -135,47 +136,4 @@ public class BusinessVideoFragment extends Fragment {
         }
     }
 
-
-
-    public void downloadVideo(Status status) throws IOException {
-        File file = new File(Consts.APP_DIR_BUSINESS);
-        if (!file.exists())
-        {
-            file.mkdirs();
-        }
-        File destFile = new File(file+File.separator + status.getTitle());
-        if (destFile.exists())
-        {
-            destFile.delete();
-        }
-
-        copyFile(status.getFile(),destFile);
-
-        Toast.makeText(getContext(), "Download complete...", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        intent.setData(Uri.fromFile(destFile));
-        getActivity().sendBroadcast(intent);
-    }
-
-    private void copyFile(File file, File destFile) throws IOException {
-        if (!destFile.getParentFile().exists())
-        {
-            destFile.getParentFile().mkdirs();
-        }
-        if (!destFile.exists())
-        {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        source = new FileInputStream(file).getChannel();
-        destination = new FileOutputStream(destFile).getChannel();
-        destination.transferFrom(source,0,source.size());
-
-        source.close();
-        destination.close();
-    }
 }

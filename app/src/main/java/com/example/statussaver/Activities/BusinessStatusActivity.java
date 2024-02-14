@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.statussaver.Fragments.BusinessImageFragment;
@@ -32,6 +33,7 @@ public class BusinessStatusActivity extends AppCompatActivity {
         activityBusinessStatusBinding = ActivityBusinessStatusBinding.inflate(getLayoutInflater());
         setContentView(activityBusinessStatusBinding.getRoot());
         activityBusinessStatusBinding.toolbar.setTitle("Business Status");
+        activityBusinessStatusBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
         setSupportActionBar(activityBusinessStatusBinding.toolbar);
 
 
@@ -73,13 +75,13 @@ public class BusinessStatusActivity extends AppCompatActivity {
     }
 
 
-    public void navigateToThirdFragment(String bitmap, int position) {
+    public void navigateToThirdFragment(Status status) {
         Bundle bundle = new Bundle();
-        bundle.putString("image_path", bitmap);
-        bundle.putInt("position", position);
+        bundle.putString("image_path", status.getPath());
+        bundle.putString("title", status.getTitle());
 
 
-        BusinessImageViewFragment businessImageViewFragment = new BusinessImageViewFragment();
+        BusinessImageViewFragment businessImageViewFragment = new BusinessImageViewFragment(status);
         businessImageViewFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -88,12 +90,11 @@ public class BusinessStatusActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void navigateToForthFragment(String status) {
+    public void navigateToForthFragment(Status status) {
         Bundle bundle = new Bundle();
-        bundle.putString("path", status);
+        bundle.putString("path", status.getPath());
 
-
-        BusinessVideoViewFragment businessVideoViewFragment = new BusinessVideoViewFragment();
+        BusinessVideoViewFragment businessVideoViewFragment = new BusinessVideoViewFragment(status);
         businessVideoViewFragment.setArguments(bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

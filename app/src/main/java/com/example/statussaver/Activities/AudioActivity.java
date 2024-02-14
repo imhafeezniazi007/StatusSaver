@@ -2,6 +2,7 @@ package com.example.statussaver.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.statussaver.R;
