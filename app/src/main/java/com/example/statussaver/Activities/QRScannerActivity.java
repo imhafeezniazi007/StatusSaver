@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -74,8 +75,17 @@ public class QRScannerActivity extends AppCompatActivity {
         activityQrscannerBinding = ActivityQrscannerBinding.inflate(getLayoutInflater());
         setContentView(activityQrscannerBinding.getRoot());
         activityQrscannerBinding.toolbar.setTitle("QR Scanner");
+        activityQrscannerBinding.toolbar.setNavigationIcon(R.drawable.back);
+        activityQrscannerBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityQrscannerBinding.toolbar);
 
+        activityQrscannerBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QRScannerActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
 
         DBHelper dbHelper = new DBHelper(this);
         List<QRScan> scanList = dbHelper.getAllQRCodes();

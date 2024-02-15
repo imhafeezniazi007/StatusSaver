@@ -2,8 +2,11 @@ package com.example.statussaver.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,8 +29,17 @@ public class WebViewActivity extends AppCompatActivity {
         binding = ActivityWebViewBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         binding.toolbar.setTitle("WhatsWeb");
+        binding.toolbar.setNavigationIcon(R.drawable.back);
+        binding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(binding.toolbar);
 
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebViewActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
 
         binding.webView.getSettings().setJavaScriptEnabled(true);
 

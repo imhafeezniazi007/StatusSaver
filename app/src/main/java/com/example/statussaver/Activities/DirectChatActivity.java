@@ -1,8 +1,10 @@
 package com.example.statussaver.Activities;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +21,18 @@ public class DirectChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityDirectChatBinding = ActivityDirectChatBinding.inflate(getLayoutInflater());
         setContentView(activityDirectChatBinding.getRoot());
+        activityDirectChatBinding.toolbar.setTitle("Direct Chat");
+        activityDirectChatBinding.toolbar.setNavigationIcon(R.drawable.back);
+        activityDirectChatBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        setSupportActionBar(activityDirectChatBinding.toolbar);
 
+        activityDirectChatBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DirectChatActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
 
         activityDirectChatBinding.imageView.setOnClickListener(new View.OnClickListener() {
             @Override

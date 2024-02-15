@@ -85,6 +85,19 @@ public class BusinessImageViewFragment extends Fragment {
                 }
             }
         });
+
+        fragmentBusinessImageViewBinding.logo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                Uri screenshotUri = Uri.parse(bStatus.getPath());
+
+                sharingIntent.setType("image/jpeg");
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+                startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+
+            }
+        });
         return view;
     }
 

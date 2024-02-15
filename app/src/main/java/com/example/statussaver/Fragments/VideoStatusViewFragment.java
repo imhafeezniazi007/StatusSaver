@@ -88,6 +88,19 @@ public class VideoStatusViewFragment extends Fragment {
             }
         });
 
+        fragmentVideoViewBinding.logo2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                Uri screenshotUri = Uri.parse(vStatus.getPath());
+
+                sharingIntent.setType("video/mp4");
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+                startActivity(Intent.createChooser(sharingIntent, "Share video using"));
+
+            }
+        });
+
         return view;
     }
 

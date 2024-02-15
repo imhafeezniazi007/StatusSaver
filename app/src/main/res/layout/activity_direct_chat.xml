@@ -7,6 +7,21 @@
     android:background="@color/color_background"
     tools:context=".Activities.DirectChatActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_primary_green"
+        android:elevation="4dp"
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dcConstraint1"
         android:layout_width="match_parent"

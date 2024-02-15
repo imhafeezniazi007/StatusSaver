@@ -1,35 +1,32 @@
 package com.example.statussaver.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.statussaver.Adapters.ImageAdapter;
-import com.example.statussaver.Adapters.QRScanAdapter;
 import com.example.statussaver.Adapters.SavedStatusAdapter;
 import com.example.statussaver.Fragments.ImageFragment;
+import com.example.statussaver.Fragments.SavedImageFragment;
+import com.example.statussaver.Fragments.SavedVideoFragment;
 import com.example.statussaver.Models.MediaFile;
-import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.Consts;
-import com.example.statussaver.databinding.ActivityMainFeaturesBinding;
 import com.example.statussaver.databinding.ActivitySavedStatusBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class SavedStatusActivity extends AppCompatActivity {
 
@@ -44,38 +41,58 @@ public class SavedStatusActivity extends AppCompatActivity {
         activitySavedStatusBinding = ActivitySavedStatusBinding.inflate(getLayoutInflater());
         setContentView(activitySavedStatusBinding.getRoot());
         activitySavedStatusBinding.toolbar.setTitle("Saved Statuses");
+        activitySavedStatusBinding.toolbar.setNavigationIcon(R.drawable.back);
+        activitySavedStatusBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activitySavedStatusBinding.toolbar);
 
+        activitySavedStatusBinding.tabLayout.addTab(activitySavedStatusBinding.tabLayout.newTab().setText("Pics"));
+        activitySavedStatusBinding.tabLayout.addTab(activitySavedStatusBinding.tabLayout.newTab().setText("Videos"));
+        activitySavedStatusBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
 
-        arrayList = new ArrayList<>();
-        savedStatusAdapter = new SavedStatusAdapter(arrayList);
-        activitySavedStatusBinding.rvSavedStatuses.setAdapter(savedStatusAdapter);
-        activitySavedStatusBinding.rvSavedStatuses.setLayoutManager(new GridLayoutManager(this, 3));
+        activitySavedStatusBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SavedStatusActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
 
-        loadMediaFilesFromFolder();
 
+        replaceFragment(new SavedImageFragment());
+
+        activitySavedStatusBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment;
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment = new SavedImageFragment();
+                        break;
+                    case 1:
+                        fragment = new SavedVideoFragment();
+                        break;
+                    default:
+                        fragment = new SavedImageFragment();
+                        break;
+                }
+                replaceFragment(fragment);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
 
     }
 
-    private void loadMediaFilesFromFolder() {
-                File[] mediaFiles = Consts.APP_DIR_SAVED.listFiles();
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
 
-                if (mediaFiles != null && mediaFiles.length > 0) {
-                    Arrays.sort(mediaFiles);
-
-                    for (final File mediaFile : mediaFiles) {
-                        MediaFile media = new MediaFile(mediaFile, mediaFile.getName(),
-                                mediaFile.getAbsolutePath());
-
-                        media.setThumbnail(getThumbnail(media));
-
-                        arrayList.add(media);
-                    }
-                }
-                else {
-                    Log.e("my_tag","No files");
-                }
-            }
     public Bitmap getThumbnail(MediaFile file) {
         if (file.isVideo()) {
             return ThumbnailUtils.createVideoThumbnail(file.getFile().getAbsolutePath(),
@@ -85,5 +102,20 @@ public class SavedStatusActivity extends AppCompatActivity {
                     , Consts.THUMBSIZE
                     , Consts.THUMBSIZE);
         }
+    }
+
+    public void navigateToThirdFragment(MediaFile status) {
+        Intent intent = new Intent(getApplicationContext(), SavedImageViewActivity.class);
+        intent.putExtra("image_path", status.getPath());
+        intent.putExtra("title", status.getName());
+        startActivity(intent);
+    }
+
+    public void navigateToForthFragment(MediaFile status) {
+        Intent intent = new Intent(getApplicationContext(), SavedVideoViewActivity.class);
+        intent.putExtra("image_path", status.getPath());
+        intent.putExtra("title", status.getName());
+        startActivity(intent);
+
     }
 }

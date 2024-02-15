@@ -32,4 +32,8 @@
     <string name="accept">accept</string>
     <string name="html_content">By clicking the ACCEPT button, you are confirming your aggreement with our privacy policy and the terms and conditions governing the use of our app. For more informationm Please visit our Privacy Policy.</string>
     <string name="text_confirmation">Connect and access your WhatsApp on multiple devices simultaneously.Stay in touch wherever you are!</string>
+    <string name="title_name">Title Name</string>
+    <string name="text_description">Text Description</string>
+    <string name="message">Message</string>
+    <string name="timestamp">Timestamp</string>
 </resources>

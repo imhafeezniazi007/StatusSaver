@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,10 +51,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(activityMainBinding.getRoot());
         setSupportActionBar(activityMainBinding.toolbar);
         activityMainBinding.toolbar.setTitle("Status Saver");
+        activityMainBinding.toolbar.setNavigationIcon(R.drawable.back);
+        activityMainBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Pics"));
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Videos"));
         activityMainBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
+
+        activityMainBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
 
         replaceFragment(new ImageFragment());
 

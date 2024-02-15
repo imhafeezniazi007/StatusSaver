@@ -12,7 +12,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/color_primary_green"
         android:elevation="4dp"
-        android:theme="?attr/actionBarTheme"/>
+        android:theme="?attr/actionBarTheme">
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

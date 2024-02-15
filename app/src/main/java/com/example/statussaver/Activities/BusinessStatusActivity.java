@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.statussaver.Fragments.BusinessImageFragment;
 import com.example.statussaver.Fragments.BusinessImageViewFragment;
@@ -33,7 +35,9 @@ public class BusinessStatusActivity extends AppCompatActivity {
         activityBusinessStatusBinding = ActivityBusinessStatusBinding.inflate(getLayoutInflater());
         setContentView(activityBusinessStatusBinding.getRoot());
         activityBusinessStatusBinding.toolbar.setTitle("Business Status");
+        activityBusinessStatusBinding.toolbar.setNavigationIcon(R.drawable.back);
         activityBusinessStatusBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
+        activityBusinessStatusBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityBusinessStatusBinding.toolbar);
 
 
@@ -41,6 +45,14 @@ public class BusinessStatusActivity extends AppCompatActivity {
         activityBusinessStatusBinding.tabLayout.addTab(activityBusinessStatusBinding.tabLayout.newTab().setText("Videos"));
 
         replaceFragment(new BusinessImageFragment());
+        activityBusinessStatusBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BusinessStatusActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
+
 
         activityBusinessStatusBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
