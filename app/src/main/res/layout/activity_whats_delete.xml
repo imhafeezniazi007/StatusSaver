@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -225,12 +226,13 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout_6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
-        android:id="@+id/relativeLayout_6"
-        android:padding="@dimen/_6sdp"
         android:background="@drawable/item_whatsdelete"
+        android:padding="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout_5">
@@ -239,18 +241,18 @@
             android:id="@+id/voice_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/voice_deletewhats"/>
+            android:src="@drawable/voice_deletewhats" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/voices"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_toEndOf="@id/voice_icon"
-            android:layout_centerVertical="true"
+            android:text="@string/voices"
+            android:textColor="@color/black"
             android:textSize="@dimen/_20ssp"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/voices_textview"
@@ -262,44 +264,7 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout_7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:background="@drawable/item_whatsdelete"
-        android:padding="@dimen/_6sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_6">
 
-        <ImageView
-            android:id="@+id/music_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/music_deletewhats" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_toEndOf="@id/music_icon"
-            android:text="@string/music"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/music_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="@string/_60_voices" />
-
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

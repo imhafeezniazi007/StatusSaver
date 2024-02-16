@@ -9,6 +9,8 @@ public class Consts {
             + File.separator + "WhatsApp/Media/.Statuses");
  public static final String WHATSAPP_DIRECTORY = Environment.getExternalStorageDirectory()
             + File.separator + "WhatsApp/Media";
+ public static final String WHATSAPP_IMG_DIRECTORY = Environment.getExternalStorageDirectory()
+            + File.separator + "Pictures";
 
     public static final File STATUS_DIRECTORY_BUSINESS = new File(Environment.getExternalStorageDirectory()
             + File.separator + "WhatsApp Business/Media/.Statuses");
@@ -17,6 +19,16 @@ public class Consts {
             + File.separator + "StatusSaverDir";
     public static final String CPY_FILES_DIR = Environment.getExternalStorageDirectory()
             + File.separator + "WhatsWebCpyFiles";
+    public static final String VID_FILE_DIR = Environment.getExternalStorageDirectory()
+            + File.separator + "Videos";
+    public static final String IMG_FILE_DIR = Environment.getExternalStorageDirectory()
+            + File.separator + "Images";
+    public static final String AUD_FILE_DIR = Environment.getExternalStorageDirectory()
+            + File.separator + "Audios";
+    public static final String DOC_FILE_DIR = Environment.getExternalStorageDirectory()
+            + File.separator + "Documents";
+    public static final String VOICE_FILE_DIR = Environment.getExternalStorageDirectory()
+            + File.separator + "Voices";
     public static final String APP_DIR_BUSINESS = Environment.getExternalStorageDirectory()
             + File.separator + "BusinessStatusSaverDir";
 

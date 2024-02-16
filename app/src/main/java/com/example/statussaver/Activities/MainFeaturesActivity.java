@@ -44,14 +44,13 @@ public class MainFeaturesActivity extends AppCompatActivity {
         binding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(binding.toolbar);
 
+        startService(new Intent(getApplicationContext(), FileObserverService.class));
 
         if (!isNotificationServiceEnabled()) {
             requestNotificationAccess();
         }
 
         requestPermissionsIfNecessary();
-        //Starting File Observer Service
-        startService(new Intent(this, FileObserverService.class));
         binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,5 +162,12 @@ public class MainFeaturesActivity extends AppCompatActivity {
             } else {
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        onStop();
+        finish();
     }
 }

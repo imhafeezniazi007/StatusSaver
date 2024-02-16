@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.Consts;
+import com.example.statussaver.Utils.NotificationDAO;
+import com.example.statussaver.Utils.NotificationDatabase;
 import com.example.statussaver.Utils.RecursiveFileObserver;
 import com.example.statussaver.databinding.ActivityWhatsDeleteBinding;
 
@@ -23,6 +25,7 @@ import java.nio.channels.FileChannel;
 public class WhatsDeleteActivity extends AppCompatActivity {
 
     ActivityWhatsDeleteBinding activityWhatsDeleteBinding;
+    NotificationDAO notificationDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,17 @@ public class WhatsDeleteActivity extends AppCompatActivity {
         activityWhatsDeleteBinding.toolbar.setNavigationIcon(R.drawable.back);
         activityWhatsDeleteBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityWhatsDeleteBinding.toolbar);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NotificationDatabase notificationDatabase = NotificationDatabase.getInstance(WhatsDeleteActivity.this);
+                notificationDAO = notificationDatabase.notificationDao();
+
+                int totalSenders = notificationDAO.getTotalSenders();
+                activityWhatsDeleteBinding.messagesTextview.setText(totalSenders+ " Messages");
+            }
+        }).start();
 
         activityWhatsDeleteBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,5 +63,10 @@ public class WhatsDeleteActivity extends AppCompatActivity {
         });
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(WhatsDeleteActivity.this, MainFeaturesActivity.class));
+        finish();
+    }
 }

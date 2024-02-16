@@ -14,11 +14,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/message"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/text_timestamp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,10 +27,9 @@
         android:layout_height="wrap_content"
         android:text="@string/timestamp"
         android:textSize="@dimen/_8sdp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

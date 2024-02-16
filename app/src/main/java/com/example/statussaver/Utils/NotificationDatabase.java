@@ -7,8 +7,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.statussaver.Models.NotificationText;
+import android.content.Context;
 
-@Database(entities = {NotificationText.class}, version = 1, exportSchema = false)
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
+import com.example.statussaver.Models.NotificationText;
+
+@Database(entities = {NotificationText.class}, version = 2, exportSchema = false)
 public abstract class NotificationDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "notification_db";

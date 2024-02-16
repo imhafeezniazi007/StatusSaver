@@ -3,7 +3,7 @@ package com.example.statussaver.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.statussaver.Activities.ChatsViewActivity;
 import com.example.statussaver.R;
-import com.example.statussaver.Models.NotificationText;
 import com.example.statussaver.databinding.ItemRecoveredChatsBinding;
 
 import java.util.List;
 
 public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> {
-    private List<NotificationText> notificationTextList;
+    private List<Pair<String, String>> senderAndLatestTextList;
     private Context context;
 
-    public ChatsAdapter(Context context, List<NotificationText> notificationTextList) {
+    public ChatsAdapter(Context context, List<Pair<String, String>> senderAndLatestTextList) {
         this.context = context;
-        this.notificationTextList = notificationTextList;
+        this.senderAndLatestTextList = senderAndLatestTextList;
     }
 
     @NonNull
@@ -35,24 +34,23 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ChatsAdapter.ViewHolder holder, int position) {
-        NotificationText notificationText = notificationTextList.get(position);
-        if (notificationText!=null) {
-            holder.binding.chatHeading.setText(notificationText.getText());
-            Log.e("_issue", "onBindViewHolder: No text in db" );
-        }
-        //holder.binding.chatHeading.setText(scan.getContent());
+        Pair<String, String> senderAndLatestText = senderAndLatestTextList.get(position);
+        holder.binding.chatHeading.setText(senderAndLatestText.first);
+        holder.binding.messageDescription.setText(senderAndLatestText.second);
 
         holder.binding.relativeLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                v.getContext().startActivity(new Intent(context, ChatsViewActivity.class));
+                Intent intent = new Intent(context, ChatsViewActivity.class);
+                intent.putExtra("sender_name", senderAndLatestText.first);
+                v.getContext().startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return notificationTextList.size();
+        return senderAndLatestTextList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,5 +60,11 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.ViewHolder> 
             super(itemView);
             binding = ItemRecoveredChatsBinding.bind(itemView);
         }
+    }
+
+    public void setData(List<Pair<String, String>> newData) {
+        senderAndLatestTextList.clear();
+        senderAndLatestTextList.addAll(newData);
+        notifyDataSetChanged();
     }
 }
