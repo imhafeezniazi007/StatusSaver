@@ -48,6 +48,7 @@ public class QRScanAdapter extends RecyclerView.Adapter<QRScanAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final QRScan scan = scanList.get(position);
+
         holder.binding.tvRecyclerData.setText(scan.getContent());
 
         holder.binding.tvRecyclerDataDots.setOnClickListener(new View.OnClickListener() {

@@ -48,6 +48,7 @@ public class FileObserverService extends NotificationListenerService {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        setupFileObserver();
         return START_STICKY;
     }
 
@@ -81,68 +82,63 @@ public class FileObserverService extends NotificationListenerService {
                         handleFileDelete(file);
                     }
                     break;
+
+                    case MOVED_TO: {
+                        Log.d(TAG, "onEvent: MOVED TO " + file.exists());
+                        handleFileDelete(file);
+                    }
+                    break;
                     default:
                         break;
                 }
             }
+
         });
 
         fileObserver.startWatching();
-            }
+}
 
-            private void handleFileDelete(File deletedFile) {
-                File fileDirectory = new File(Consts.CPY_FILES_DIR);
-                if (!fileDirectory.exists()) {
-                    fileDirectory.mkdirs();
+
+    private void handleFileDelete(File deletedFile) {
+        File fileDirectory = new File(Consts.CPY_FILES_DIR);
+        if (!fileDirectory.exists()) {
+            fileDirectory.mkdirs();
+        }
+
+        if (deletedFile.exists()) {
+            try {
+                String fileName = deletedFile.getName();
+
+                File destDirectory;
+                if (fileName.contains(".mp4")) {
+                    destDirectory = new File(Consts.VID_FILE_DIR);
+                } else if (fileName.contains(".jpg") || fileName.contains(".jpeg") || fileName.contains(".png") || fileName.contains(".webp")) {
+                    destDirectory = new File(Consts.IMG_FILE_DIR);
+                } else if (fileName.contains(".aac") || fileName.contains(".mp3")) {
+                    destDirectory = new File(Consts.AUD_FILE_DIR);
+                } else if (fileName.contains(".opus") || fileName.contains(".ogg")) {
+                    destDirectory = new File(Consts.VOICE_FILE_DIR);
+                } else {
+                    destDirectory = new File(Consts.DOC_FILE_DIR);
                 }
 
-                try {
-                    if (deletedFile.getName().contains(".mp4")) {
-                        File videoDirectory = new File(Consts.VID_FILE_DIR);
-                        if (!videoDirectory.exists()) {
-                            videoDirectory.mkdirs();
-                        }
-                        File destFile = new File(videoDirectory, deletedFile.getName());
-
-                        copyFile(deletedFile, destFile);
-                    } else if (deletedFile.getName().contains(".jpg") || deletedFile.getName().contains(".jpeg") || deletedFile.getName().contains(".png") || deletedFile.getName().contains(".webp")) {
-                        File imageDirectory = new File(Consts.IMG_FILE_DIR);
-                        if (!imageDirectory.exists()) {
-                            imageDirectory.mkdirs();
-                        }
-                        File destFile = new File(imageDirectory, deletedFile.getName());
-
-                        copyFile(deletedFile, destFile);
-                    } else if (deletedFile.getName().contains(".aac") || deletedFile.getName().contains(".mp3")) {
-                        File audioDirectory = new File(Consts.AUD_FILE_DIR);
-                        if (!audioDirectory.exists()) {
-                            audioDirectory.mkdirs();
-                        }
-                        File destFile = new File(audioDirectory, deletedFile.getName());
-
-                        copyFile(deletedFile, destFile);
-                    } else if (deletedFile.getName().contains(".opus") || deletedFile.getName().contains(".ogg")) {
-                        File voiceDirectory = new File(Consts.VOICE_FILE_DIR);
-                        if (!voiceDirectory.exists()) {
-                            voiceDirectory.mkdirs();
-                        }
-                        File destFile = new File(voiceDirectory, deletedFile.getName());
-
-                        copyFile(deletedFile, destFile);
-                    } else {
-                        File docDirectory = new File(Consts.DOC_FILE_DIR);
-                        if (!docDirectory.exists()) {
-                            docDirectory.mkdirs();
-                        }
-                        File destFile = new File(docDirectory, deletedFile.getName());
-
-                        copyFile(deletedFile, destFile);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e(TAG, "Error copying file: " + e.getMessage());
+                if (!destDirectory.exists()) {
+                    destDirectory.mkdirs();
                 }
+
+                File destFile = new File(destDirectory, fileName);
+
+                copyFile(deletedFile, destFile);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e(TAG, "Error copying file: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, "File does not exist anymore: " + deletedFile.getAbsolutePath());
+        }
+    }
 
             private void copyFile(File sourceFile, File destFile) throws IOException {
 

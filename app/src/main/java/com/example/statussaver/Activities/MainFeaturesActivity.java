@@ -1,11 +1,13 @@
 package com.example.statussaver.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.Manifest;
@@ -24,13 +26,24 @@ import com.example.statussaver.Utils.FileObserverService;
 import com.example.statussaver.Utils.NotificationListenService;
 import com.example.statussaver.databinding.ActivityMainBinding;
 import com.example.statussaver.databinding.ActivityMainFeaturesBinding;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class MainFeaturesActivity extends AppCompatActivity {
 
     ActivityMainFeaturesBinding binding;
+    private InterstitialAd interstitialAd;
     private static final int READ_STORAGE_PERMISSION_REQUEST_CODE = 1;
     private static final int REQUEST_CODE_PERMISSIONS = 100;
-    private static final int REQUEST_NOTIFICATION_ACCESS = 1;
     private static final String[] REQUIRED_PERMISSIONS = new String[] {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.MANAGE_EXTERNAL_STORAGE
@@ -46,11 +59,23 @@ public class MainFeaturesActivity extends AppCompatActivity {
 
         startService(new Intent(getApplicationContext(), FileObserverService.class));
 
-        if (!isNotificationServiceEnabled()) {
-            requestNotificationAccess();
-        }
+        AdView adView = new AdView(this);
 
-        requestPermissionsIfNecessary();
+        adView.setAdSize(AdSize.BANNER);
+
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
+
+        showAd();
+        //requestPermissionsIfNecessary();
         binding.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,14 +125,36 @@ public class MainFeaturesActivity extends AppCompatActivity {
             }
         });
 
+    requestPermissionsIfNecessary();
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+    }
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    READ_STORAGE_PERMISSION_REQUEST_CODE);
-        }
+
+    private void showAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd loadedInterstitialAd) {
+                        interstitialAd = loadedInterstitialAd;
+                        Log.i("TAG", "onAdLoaded");
+                        // Show the ad here
+                        if (interstitialAd != null) {
+                            interstitialAd.show(MainFeaturesActivity.this);
+                        } else {
+                            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                        }
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d("TAG", loadAdError.toString());
+                        interstitialAd = null;
+                    }
+
+                });
     }
 
     @Override
@@ -116,11 +163,26 @@ public class MainFeaturesActivity extends AppCompatActivity {
 
         switch (requestCode) {
             case READ_STORAGE_PERMISSION_REQUEST_CODE: {
-                // Check if the permission was granted
+
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted, you can now access the storage
                 } else {
-                    Toast.makeText(this, "permission not granted", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MainFeaturesActivity.this);
+                    builder1.setMessage("Do you want to continue without permissions?");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Yes",
+                            (dialog, id) -> dialog.cancel());
+
+                    builder1.setNegativeButton(
+                            "No",
+                            (dialog, id) -> {
+                                requestPermissionsIfNecessary();
+                                dialog.cancel();
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
                 }
                 break;
             }
@@ -141,33 +203,9 @@ public class MainFeaturesActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isNotificationServiceEnabled() {
-        ComponentName cn = new ComponentName(this, NotificationListenService.class);
-        String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
-        return flat != null && flat.contains(cn.flattenToString());
-    }
-
-    private void requestNotificationAccess() {
-        // Request permission to access notifications
-        Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
-        startActivityForResult(intent, REQUEST_NOTIFICATION_ACCESS);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_NOTIFICATION_ACCESS) {
-            if (isNotificationServiceEnabled()) {
-                Log.e("_serv", "onActivityResult: service started successfully" );
-            } else {
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        onStop();
         finish();
     }
 }

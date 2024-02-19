@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -16,12 +19,24 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.StatusSaver"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8553911388603017~3170772403" />
+
+        <activity
+            android:name=".Activities.CapturePortraitQRActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.ChatsViewActivity"
             android:exported="false" />
@@ -35,14 +50,17 @@
             android:name=".Activities.SavedImageViewActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.ConfirmationActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activities.PrivacyPolicyActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.SubscriptionActivity"
-            android:exported="false" />
+            android:exported="false" >
+            <meta-data
+                android:name="com.android.billingclient.api.BILLING_VERSION"
+                android:value="6.1.0" />
+
+        </activity>
+
         <activity
             android:name=".Activities.BusinessStatusActivity"
             android:exported="false" />
@@ -72,14 +90,11 @@
             android:exported="false" />
         <activity
             android:name=".Activities.MainFeaturesActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activities.WebViewActivity"
             android:exported="false" />
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8553911388603017~3170772403" />
 
         <activity
             android:name=".Activities.SplashActivity"
@@ -91,6 +106,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".Activities.MainActivity"
             android:exported="false" />
@@ -104,11 +121,10 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".Utils.NotificationListenService"
-            android:label="Notification Listener"
             android:exported="false"
+            android:label="Notification Listener"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />

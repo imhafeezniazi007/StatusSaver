@@ -1,31 +1,28 @@
 package com.example.statussaver.Activities;
 
 
+import static java.security.AccessController.getContext;
+
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.statussaver.Adapters.QRScanAdapter;
@@ -57,7 +54,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QRScannerActivity extends AppCompatActivity {
@@ -93,6 +89,18 @@ public class QRScannerActivity extends AppCompatActivity {
         activityQrscannerBinding.rvData.setAdapter(adapter);
         activityQrscannerBinding.rvData.setLayoutManager(new LinearLayoutManager(this));
 
+        activityQrscannerBinding.rvData.addItemDecoration(new DividerItemDecoration(getApplicationContext(),
+                DividerItemDecoration.VERTICAL));
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.divider));
+        if (scanList.size() == 0)
+        {
+            activityQrscannerBinding.tvTextfound.setVisibility(View.VISIBLE);
+        }
+        else {
+            activityQrscannerBinding.tvTextfound.setVisibility(View.GONE);
+        }
 
         activityQrscannerBinding.flash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,8 +160,9 @@ public class QRScannerActivity extends AppCompatActivity {
     }
     private void startScanner() {
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setOrientationLocked(false);
+        integrator.setOrientationLocked(true);
         integrator.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
+        integrator.setCaptureActivity(CapturePortraitQRActivity.class);
         integrator.initiateScan();
     }
     @Override
@@ -162,6 +171,7 @@ public class QRScannerActivity extends AppCompatActivity {
         if (result != null) {
             if (result.getContents() != null) {
                 activityQrscannerBinding.resultTv.setText(result.getContents());
+                activityQrscannerBinding.tvTextfound.setVisibility(View.GONE);
                 activityQrscannerBinding.appCompatButton.setVisibility(View.VISIBLE);
                 DBHelper databaseHelper = new DBHelper(this);
                 SQLiteDatabase db = databaseHelper.getWritableDatabase();

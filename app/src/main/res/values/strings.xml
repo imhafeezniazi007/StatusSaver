@@ -36,4 +36,6 @@
     <string name="text_description">Text Description</string>
     <string name="message">Message</string>
     <string name="timestamp">Timestamp</string>
+    <string name="country_code">Country Code</string>
+    <string name="url">URL</string>
 </resources>

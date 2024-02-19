@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/color_background"
     tools:context=".Activities.QRScannerActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -44,24 +44,37 @@
         android:layout_margin="@dimen/_8sdp"
         android:visibility="gone"/>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    <TextView
+        android:id="@+id/tv_textfound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No data found. Open scanner to scan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/scrollView3"
+        app:layout_constraintTop_toBottomOf="@+id/result_tv" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_data"
+    <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/_8sdp"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_tv">
 
-</ScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_data"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_8sdp" />
+
+    </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
-        android:layout_width="@dimen/_100sdp"
+        android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:background="@drawable/item_qrscanner"
@@ -74,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_18sdp"
+            android:padding="@dimen/_8sdp"
             android:src="@drawable/flash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_18sdp"
+            android:padding="@dimen/_8sdp"
             android:src="@drawable/qr_image_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

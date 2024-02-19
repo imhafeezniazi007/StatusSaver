@@ -1,10 +1,16 @@
 package com.example.statussaver.Activities;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -12,16 +18,22 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.ProgressImageDialog;
 import com.example.statussaver.databinding.ActivityWebViewBinding;
-
-import org.w3c.dom.Document;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnPaidEventListener;
+import com.google.android.gms.ads.ResponseInfo;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
 public class WebViewActivity extends AppCompatActivity {
 
     ActivityWebViewBinding binding;
+    ProgressImageDialog progressDialog;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +45,9 @@ public class WebViewActivity extends AppCompatActivity {
         binding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(binding.toolbar);
 
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WebViewActivity.this, MainFeaturesActivity.class));
-                finish();
-            }
-        });
-
         binding.webView.getSettings().setJavaScriptEnabled(true);
 
-        binding.webView.setWebViewClient(new WebViewClient());
+
         binding.webView.getSettings().setUseWideViewPort(true);
         binding.webView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; Win64; x64; rv:46.0) Gecko/20100101 Firefox/68.0");
         binding.webView.getSettings().setGeolocationEnabled(true);
@@ -59,7 +63,57 @@ public class WebViewActivity extends AppCompatActivity {
         binding.webView.setInitialScale(100);
 
         hideElementsByClassName(binding.webView);
+
+        showAd();
+        progressDialog = new ProgressImageDialog(WebViewActivity.this);
+        progressDialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 11000);
+
+
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WebViewActivity.this, MainFeaturesActivity.class));
+                finish();
+            }
+        });
+
     }
+
+    private void showAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd loadedInterstitialAd) {
+                        interstitialAd = loadedInterstitialAd;
+                        Log.i("TAG", "onAdLoaded");
+                        // Show the ad here
+                        if (interstitialAd != null) {
+                            interstitialAd.show(WebViewActivity.this);
+                        } else {
+                            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                        }
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d("TAG", loadAdError.toString());
+                        interstitialAd = null;
+                    }
+
+                });
+    }
+
 
     public static void hideElementsByClassName(WebView webView) {
         webView.setWebViewClient(new WebViewClient() {
@@ -87,5 +141,4 @@ public class WebViewActivity extends AppCompatActivity {
 
         webView.loadUrl("https://web.whatsapp.com/");
     }
-
 }

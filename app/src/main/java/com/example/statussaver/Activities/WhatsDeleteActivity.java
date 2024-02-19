@@ -4,15 +4,19 @@ import static android.os.FileObserver.DELETE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.Utils.NotificationDAO;
 import com.example.statussaver.Utils.NotificationDatabase;
+import com.example.statussaver.Utils.NotificationListenService;
 import com.example.statussaver.Utils.RecursiveFileObserver;
 import com.example.statussaver.databinding.ActivityWhatsDeleteBinding;
 
@@ -26,6 +30,7 @@ public class WhatsDeleteActivity extends AppCompatActivity {
 
     ActivityWhatsDeleteBinding activityWhatsDeleteBinding;
     NotificationDAO notificationDAO;
+    private static final int REQUEST_NOTIFICATION_ACCESS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,11 @@ public class WhatsDeleteActivity extends AppCompatActivity {
         activityWhatsDeleteBinding.toolbar.setNavigationIcon(R.drawable.back);
         activityWhatsDeleteBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityWhatsDeleteBinding.toolbar);
+
+
+        if (!isNotificationServiceEnabled()) {
+            requestNotificationAccess();
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -61,6 +71,31 @@ public class WhatsDeleteActivity extends AppCompatActivity {
                 startActivity(new Intent(WhatsDeleteActivity.this, ChatsActivity.class));
             }
         });
+    }
+
+
+
+    private boolean isNotificationServiceEnabled() {
+        ComponentName cn = new ComponentName(this, NotificationListenService.class);
+        String flat = Settings.Secure.getString(getContentResolver(), "enabled_notification_listeners");
+        return flat != null && flat.contains(cn.flattenToString());
+    }
+
+    private void requestNotificationAccess() {
+        // Request permission to access notifications
+        Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+        startActivityForResult(intent, REQUEST_NOTIFICATION_ACCESS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_NOTIFICATION_ACCESS) {
+            if (isNotificationServiceEnabled()) {
+                Log.e("_serv", "onActivityResult: service started successfully" );
+            } else {
+            }
+        }
     }
 
     @Override

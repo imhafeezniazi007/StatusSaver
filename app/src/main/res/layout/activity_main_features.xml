@@ -26,24 +26,26 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/constraintLayout6"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_8sdp"
         app:cardBackgroundColor="@color/color_background_card"
         app:cardCornerRadius="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout5">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView"
             android:background="@drawable/item_whatsweb"
             android:orientation="vertical"
             android:padding="@dimen/_18sdp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -51,39 +53,39 @@
                 android:id="@+id/qr_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/webwhats"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/webwhats"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"   />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="-25dp"
-                android:background="@drawable/button_whatsweb"
-                android:backgroundTint="@color/color_green_transparent"
-                android:text="Whats web"
-                android:padding="@dimen/_8sdp"
-                android:textColor="@color/color_dark_green_transparent"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/cardView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/button_whatsweb"
+            android:backgroundTint="@color/color_green_transparent"
+            android:padding="@dimen/_8sdp"
+            android:text="Whats web"
+            android:textColor="@color/color_dark_green_transparent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/constraintLayout5"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         app:cardBackgroundColor="@color/color_background_card"
@@ -98,6 +100,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/item_whatsweb"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/_8sdp"
             android:padding="@dimen/_18sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -106,48 +109,49 @@
                 android:id="@+id/delete_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/whatsdelete"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/whatsdelete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="-25dp"
-                android:background="@drawable/button_whatsweb"
-                android:backgroundTint="@color/color_green_transparent"
-                android:text="Whatsdelete"
-                android:padding="@dimen/_8sdp"
-                android:textColor="@color/color_dark_green_transparent"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/cardView4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView4"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/button_whatsweb"
+            android:backgroundTint="@color/color_green_transparent"
+            android:padding="@dimen/_8sdp"
+            android:text="Whatsdelete"
+            android:textColor="@color/color_dark_green_transparent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/cardView4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/constraintLayout4"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:cardBackgroundColor="@color/color_background_card"
         app:cardCornerRadius="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout6"
         app:layout_constraintStart_toStartOf="@+id/constraintLayout6"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout6">
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView3"
             android:background="@drawable/item_direct_chat"
             android:orientation="vertical"
             android:padding="@dimen/_18sdp"
@@ -159,47 +163,49 @@
                 android:id="@+id/chat_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/directchat"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/directchat"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="-25dp"
-                android:background="@drawable/button_whatsweb"
-                android:backgroundTint="@color/color_gold_transparent"
-                android:text="Direct Chat"
-                android:padding="@dimen/_8sdp"
-                android:textColor="@color/color_gold_text"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/cardView3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3"  />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/button_whatsweb"
+            android:backgroundTint="@color/color_gold_transparent"
+            android:padding="@dimen/_8sdp"
+            android:text="Direct Chat"
+            android:textColor="@color/color_gold_text"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cardView3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/constraintLayout3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:id="@+id/constraintLayout3"
         app:cardBackgroundColor="#FAFAFA"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cardView5"
             android:background="@drawable/item_qr_scanner"
             android:orientation="vertical"
             android:padding="@dimen/_18sdp"
@@ -211,12 +217,12 @@
                 android:id="@+id/qrscanner_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/qrscanner"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/qrscanner"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"   />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -228,8 +234,8 @@
             android:layout_marginTop="-25dp"
             android:background="@drawable/button_whatsweb"
             android:backgroundTint="@color/color_white_transparent"
-            android:text="@string/qr_scanner"
             android:padding="@dimen/_8sdp"
+            android:text="@string/qr_scanner"
             android:textColor="@color/color_black_text"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/cardView5"
@@ -238,25 +244,35 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/_16sdp"
-        android:background="@drawable/item_rectangle_design"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+    <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_16sdp"
+            android:background="@drawable/item_rectangle_design"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/_const_layout_5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/_16sdp"
         app:cardBackgroundColor="@color/color_background_card"
         app:cardCornerRadius="@dimen/_16sdp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/adView">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -274,38 +290,39 @@
                 android:id="@+id/statussaver_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/statussaver"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/statussaver"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"  />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="-25dp"
-                android:background="@drawable/button_whatsweb"
-                android:backgroundTint="@color/color_purple_transparent"
-                android:text="Status Saver"
-                android:padding="@dimen/_8sdp"
-                android:textColor="@color/color_purple_text"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="-25dp"
+            android:background="@drawable/button_whatsweb"
+            android:backgroundTint="@color/color_purple_transparent"
+            android:padding="@dimen/_8sdp"
+            android:text="Status Saver"
+            android:textColor="@color/color_purple_text"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/adView">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -323,8 +340,8 @@
                 android:id="@+id/savedstatus_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/savedstatus"
                 android:layout_marginBottom="@dimen/_16sdp"
+                android:src="@drawable/savedstatus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -350,10 +367,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:id="@+id/constraintLayout9"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_160sdp"
         android:layout_margin="@dimen/_16sdp"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintStart_toStartOf="@+id/_const_layout_5"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <androidx.constraintlayout.widget.ConstraintLayout

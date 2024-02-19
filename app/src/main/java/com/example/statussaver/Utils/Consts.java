@@ -10,7 +10,7 @@ public class Consts {
  public static final String WHATSAPP_DIRECTORY = Environment.getExternalStorageDirectory()
             + File.separator + "WhatsApp/Media";
  public static final String WHATSAPP_IMG_DIRECTORY = Environment.getExternalStorageDirectory()
-            + File.separator + "Pictures";
+            + File.separator + "WhatsApp/Media/WhatsApp Images/Sent";
 
     public static final File STATUS_DIRECTORY_BUSINESS = new File(Environment.getExternalStorageDirectory()
             + File.separator + "WhatsApp Business/Media/.Statuses");

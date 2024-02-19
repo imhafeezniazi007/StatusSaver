@@ -22,7 +22,7 @@
         android:layout_width="@dimen/_200sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_8sdp"
-        android:background="@drawable/item_subscription_btn"
+        android:background="@drawable/btn_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3">
@@ -55,7 +55,7 @@
         android:layout_width="@dimen/_200sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_8sdp"
-        android:background="@drawable/item_subscription_btn"
+        android:background="@drawable/btn_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/first_btn_view">
@@ -88,8 +88,7 @@
         android:layout_width="@dimen/_200sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_margin="@dimen/_8sdp"
-        android:backgroundTint="@color/color_parrot_green"
-        android:background="@drawable/item_subscription_btn"
+        android:background="@drawable/btn_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/second_btn_view">
@@ -146,6 +145,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:id="@+id/btn_buy"
         android:background="@drawable/item_subscription_btn"
         android:backgroundTint="@color/color_parrot_green"
         android:text="Buy Now"

@@ -16,6 +16,12 @@ import com.example.statussaver.R;
 import com.example.statussaver.Utils.NotificationDAO;
 import com.example.statussaver.Utils.NotificationDatabase;
 import com.example.statussaver.databinding.ActivityChatsViewBinding;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +51,23 @@ public class ChatsViewActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        AdView adView = new AdView(this);
+
+        adView.setAdSize(AdSize.BANNER);
+
+        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        activityChatsViewBinding.adView.loadAd(adRequest);
+
 
         activityChatsViewBinding.rvChatsView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -69,5 +69,19 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
         htmlTextView.setText(spannableString);
         htmlTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        activityPrivacyPolicyBinding.appCompatButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PrivacyPolicyActivity.this, SubscriptionActivity.class));
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
