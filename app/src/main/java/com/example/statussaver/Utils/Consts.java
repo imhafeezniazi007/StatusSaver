@@ -20,20 +20,30 @@ public class Consts {
     public static final String CPY_FILES_DIR = Environment.getExternalStorageDirectory()
             + File.separator + "WhatsWebCpyFiles";
     public static final String VID_FILE_DIR = Environment.getExternalStorageDirectory()
-            + File.separator + "Videos";
+            + File.separator + "WhatsWebCpyFiles/Videos";
     public static final String IMG_FILE_DIR = Environment.getExternalStorageDirectory()
-            + File.separator + "Images";
+            + File.separator + "WhatsWebCpyFiles/Images";
     public static final String AUD_FILE_DIR = Environment.getExternalStorageDirectory()
-            + File.separator + "Audios";
+            + File.separator + "WhatsWebCpyFiles/Audios";
     public static final String DOC_FILE_DIR = Environment.getExternalStorageDirectory()
-            + File.separator + "Documents";
+            + File.separator + "WhatsWebCpyFiles/Documents";
     public static final String VOICE_FILE_DIR = Environment.getExternalStorageDirectory()
-            + File.separator + "Voices";
+            + File.separator + "WhatsWebCpyFiles/Voices";
     public static final String APP_DIR_BUSINESS = Environment.getExternalStorageDirectory()
             + File.separator + "BusinessStatusSaverDir";
 
     public static final File APP_DIR_SAVED = new File(Environment.getExternalStorageDirectory()
             + File.separator + "StatusSaverDir");
+    public static final File REC_IMG_DIR = new File(Environment.getExternalStorageDirectory()
+            + File.separator + "WhatsWebCpyFiles/Images");
+    public static final File REC_VID_DIR = new File(Environment.getExternalStorageDirectory()
+            + File.separator + "WhatsWebCpyFiles/Videos");
+    public static final File REC_AUD_DIR = new File(Environment.getExternalStorageDirectory()
+            + File.separator + "WhatsWebCpyFiles/Audios");
+    public static final File REC_DOC_DIR = new File(Environment.getExternalStorageDirectory()
+            + File.separator + "WhatsWebCpyFiles/Documents");
+    public static final File REC_VOICE_DIR = new File(Environment.getExternalStorageDirectory()
+            + File.separator + "WhatsWebCpyFiles/Voices");
 
     public static final int THUMBSIZE = 128;
 }

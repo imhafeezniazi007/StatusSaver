@@ -2,15 +2,19 @@ package com.example.statussaver.Activities;
 
 import static android.os.FileObserver.DELETE;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.Consts;
@@ -65,10 +69,20 @@ public class WhatsDeleteActivity extends AppCompatActivity {
             }
         });
 
-        activityWhatsDeleteBinding.relativeLayout1.setOnClickListener(new View.OnClickListener() {
+        setClickListener(activityWhatsDeleteBinding.relativeLayout1, ChatsActivity.class);
+        setClickListener(activityWhatsDeleteBinding.relativeLayout2, ImageActivity.class);
+        setClickListener(activityWhatsDeleteBinding.relativeLayout3, VideoActivity.class);
+        setClickListener(activityWhatsDeleteBinding.relativeLayout4, AudioActivity.class);
+        setClickListener(activityWhatsDeleteBinding.relativeLayout5, DocumentActivity.class);
+        setClickListener(activityWhatsDeleteBinding.relativeLayout6, VoiceActivity.class);
+
+    }
+
+    private void setClickListener(View view, final Class<?> activityClass) {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WhatsDeleteActivity.this, ChatsActivity.class));
+                startActivity(new Intent(WhatsDeleteActivity.this, activityClass));
             }
         });
     }
@@ -82,9 +96,31 @@ public class WhatsDeleteActivity extends AppCompatActivity {
     }
 
     private void requestNotificationAccess() {
-        // Request permission to access notifications
-        Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
-        startActivityForResult(intent, REQUEST_NOTIFICATION_ACCESS);
+        if (!isFinishing()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Permission Needed");
+            builder.setMessage("This feature needs notification access to function");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+                    startActivityForResult(intent, REQUEST_NOTIFICATION_ACCESS);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Toast.makeText(WhatsDeleteActivity.this, "Permission denied", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            if (!isFinishing()) {
+                dialog.show();
+            }
+        }
     }
 
     @Override

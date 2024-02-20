@@ -5,66 +5,66 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.statussaver.Adapters.RecoveredAudioAdapter;
-import com.example.statussaver.Adapters.RecoveredImageAdapter;
+import com.example.statussaver.Adapters.RecoveredDocumentAdapter;
+import com.example.statussaver.Adapters.RecoveredVoiceAdapter;
 import com.example.statussaver.Models.MediaFile;
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.Consts;
-import com.example.statussaver.databinding.ActivityAudioBinding;
+import com.example.statussaver.databinding.ActivityDocumentBinding;
+import com.example.statussaver.databinding.ActivityVoiceBinding;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AudioActivity extends AppCompatActivity {
+public class VoiceActivity extends AppCompatActivity {
 
-    ActivityAudioBinding activityAudioBinding;
+    ActivityVoiceBinding activityVoiceBinding;
     ArrayList<MediaFile> arrayList;
-    RecoveredAudioAdapter recoveredAudioAdapter;
+    RecoveredVoiceAdapter recoveredVoiceAdapter;
     Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityAudioBinding = ActivityAudioBinding.inflate(getLayoutInflater());
-        setContentView(activityAudioBinding.getRoot());
-        activityAudioBinding.toolbar.setTitle("Audios");
-        activityAudioBinding.toolbar.setNavigationIcon(R.drawable.back);
-        activityAudioBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
-        setSupportActionBar(activityAudioBinding.toolbar);
+        activityVoiceBinding = ActivityVoiceBinding.inflate(getLayoutInflater());
+        setContentView(activityVoiceBinding.getRoot());
+        activityVoiceBinding.toolbar.setTitle("Voices");
+        activityVoiceBinding.toolbar.setNavigationIcon(R.drawable.back);
+        activityVoiceBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        setSupportActionBar(activityVoiceBinding.toolbar);
 
-        activityAudioBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        activityVoiceBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AudioActivity.this, WhatsDeleteActivity.class));
+                startActivity(new Intent(VoiceActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
 
 
 
-        arrayList = new ArrayList<>();
-        activityAudioBinding.recyclerViewRecovered.setLayoutManager(new GridLayoutManager(AudioActivity.this, 3));
 
-        loadAudios();
+        arrayList = new ArrayList<>();
+        activityVoiceBinding.recyclerViewRecovered.setLayoutManager(new GridLayoutManager(VoiceActivity.this, 3));
+
+        loadVocies();
 
 
     }
 
-    private void loadAudios() {
-        if (Consts.REC_AUD_DIR.exists())
+    private void loadVocies() {
+        if (Consts.REC_VOICE_DIR.exists())
         {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
 
-                    File[] mediaFiles = Consts.REC_AUD_DIR.listFiles();
+                    File[] mediaFiles = Consts.REC_VOICE_DIR.listFiles();
 
                     if (mediaFiles != null && mediaFiles.length > 0) {
                         Arrays.sort(mediaFiles);
@@ -73,15 +73,15 @@ public class AudioActivity extends AppCompatActivity {
                             MediaFile media = new MediaFile(mediaFile, mediaFile.getName(),
                                     mediaFile.getAbsolutePath());
 
-                                arrayList.add(media);
+                            arrayList.add(media);
                         }
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                activityAudioBinding.progressBar.setVisibility(View.GONE);
-                                recoveredAudioAdapter = new RecoveredAudioAdapter(arrayList, getApplicationContext());
-                                activityAudioBinding.recyclerViewRecovered.setAdapter(recoveredAudioAdapter);
-                                recoveredAudioAdapter.notifyDataSetChanged();
+                                activityVoiceBinding.progressBar.setVisibility(View.GONE);
+                                recoveredVoiceAdapter = new RecoveredVoiceAdapter(arrayList, getApplicationContext());
+                                activityVoiceBinding.recyclerViewRecovered.setAdapter(recoveredVoiceAdapter);
+                                recoveredVoiceAdapter.notifyDataSetChanged();
                             }
                         });
 
@@ -90,8 +90,8 @@ public class AudioActivity extends AppCompatActivity {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                activityAudioBinding.progressBar.setVisibility(View.GONE);
-                                Toast.makeText(AudioActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                activityVoiceBinding.progressBar.setVisibility(View.GONE);
+                                Toast.makeText(VoiceActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
                             }
                         });
 
@@ -105,8 +105,7 @@ public class AudioActivity extends AppCompatActivity {
     {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("audio/*");
-        Uri uri = Uri.fromFile(status.getFile());
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, status.getFile().toURI());
         startActivity(Intent.createChooser(shareIntent, "Share via"));
     }
 

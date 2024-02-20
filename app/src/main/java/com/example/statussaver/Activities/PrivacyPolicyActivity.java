@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Spannable;
@@ -19,6 +20,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.statussaver.R;
 import com.example.statussaver.databinding.ActivityPrivacyPolicyBinding;
@@ -26,17 +28,28 @@ import com.example.statussaver.databinding.ActivityPrivacyPolicyBinding;
 public class PrivacyPolicyActivity extends AppCompatActivity {
 
     ActivityPrivacyPolicyBinding activityPrivacyPolicyBinding;
+
+    private static final String KEY_FIRST_TIME = "isFirstTime";
+    private static final String PREF_NAME = "MyPrefs";
+    private SharedPreferences sharedPrefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityPrivacyPolicyBinding = ActivityPrivacyPolicyBinding.inflate(getLayoutInflater());
         setContentView(activityPrivacyPolicyBinding.getRoot());
 
-        TextView htmlTextView = activityPrivacyPolicyBinding.spannableText;
-        String htmlContent = getString(R.string.html_content);
+        sharedPrefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        TextView htmlTextView = activityPrivacyPolicyBinding.spannableTextSecond;
+        TextView htmlTextViewSecond = activityPrivacyPolicyBinding.spannableText;
+        String htmlContent = getString(R.string.html_content_second);
+        String htmlContentSecond = getString(R.string.html_content);
+
         Spanned spannedString = Html.fromHtml(htmlContent, Html.FROM_HTML_MODE_LEGACY);
+        Spanned spannedStringSecond = Html.fromHtml(htmlContentSecond, Html.FROM_HTML_MODE_LEGACY);
 
         SpannableString spannableString = new SpannableString(spannedString);
+        SpannableString spannableStringSecond = new SpannableString(spannedStringSecond);
 
         int startIndex = htmlContent.indexOf("Privacy Policy");
         int endIndex = startIndex + "Privacy Policy".length();
@@ -44,13 +57,8 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         int secondSIndex = 16;
         int secondEIndex = 22;
 
-        StyleSpan[] spansToRemove = spannableString.getSpans(startIndex, endIndex, StyleSpan.class);
-        for (StyleSpan span : spansToRemove) {
-            spannableString.removeSpan(span);
-        }
-
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#FF109B2C"));
-        spannableString.setSpan(colorSpan, secondSIndex, secondEIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringSecond.setSpan(colorSpan, secondSIndex, secondEIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -69,12 +77,23 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
 
         htmlTextView.setText(spannableString);
         htmlTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        htmlTextViewSecond.setText(spannableStringSecond);
+        htmlTextViewSecond.setMovementMethod(LinkMovementMethod.getInstance());
 
         activityPrivacyPolicyBinding.appCompatButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PrivacyPolicyActivity.this, SubscriptionActivity.class));
-                finish();
+                if (activityPrivacyPolicyBinding.checkBox.isChecked()) {
+                    SharedPreferences.Editor editor = sharedPrefs.edit();
+                    editor.putBoolean(KEY_FIRST_TIME, false);
+                    editor.apply();
+                    startActivity(new Intent(PrivacyPolicyActivity.this, SubscriptionActivity.class));
+                    finish();
+                }
+                else {
+                    Toast.makeText(PrivacyPolicyActivity.this, "Please read our privacy policy.", Toast.LENGTH_SHORT).show();
+                    activityPrivacyPolicyBinding.checkBox.setError("CheckMe");
+                }
             }
         });
     }

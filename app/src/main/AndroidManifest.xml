@@ -8,8 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -24,7 +23,16 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.StatusSaver"
-        tools:targetApi="31">
+        tools:targetApi="34">
+        <activity
+            android:name=".Activities.VoiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.RecoveredVideoViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.RecoveredImageViewActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -54,13 +62,11 @@
             android:exported="false" />
         <activity
             android:name=".Activities.SubscriptionActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="com.android.billingclient.api.BILLING_VERSION"
                 android:value="6.1.0" />
-
         </activity>
-
         <activity
             android:name=".Activities.BusinessStatusActivity"
             android:exported="false" />
@@ -90,12 +96,10 @@
             android:exported="false" />
         <activity
             android:name=".Activities.MainFeaturesActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activities.WebViewActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".Activities.SplashActivity"
             android:exported="true"
@@ -106,8 +110,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".Activities.MainActivity"
             android:exported="false" />

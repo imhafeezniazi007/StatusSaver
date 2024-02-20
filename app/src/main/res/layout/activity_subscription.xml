@@ -19,15 +19,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/first_btn_view"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/btn_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
         <TextView
+            android:id="@+id/tv_one_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_1_month"
@@ -39,6 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_rate_one_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -52,15 +54,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/second_btn_view"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/btn_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/first_btn_view">
 
         <TextView
+            android:id="@+id/tv_one_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_1_year"
@@ -72,6 +75,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_rate_one_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -85,26 +89,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/third_btn_view"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/btn_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/second_btn_view"
+        app:layout_constraintStart_toStartOf="@+id/second_btn_view"
         app:layout_constraintTop_toBottomOf="@+id/second_btn_view">
 
         <TextView
+            android:id="@+id/tv_one_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_1_time"
-            android:textStyle="bold"
             android:layout_marginStart="@dimen/_12sdp"
+            android:text="@string/_1_time"
             android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_rate_one_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_12sdp"
@@ -120,39 +126,39 @@
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="@string/subscription_text"
         android:textColor="@color/white"
         android:textSize="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="@id/third_btn_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cancel" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_subscription_btn"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:backgroundTint="@color/color_off_white"
+        android:text="@string/cancel"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/third_btn_view"
         app:layout_constraintTop_toBottomOf="@+id/third_btn_view" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_cancel"
-        android:background="@drawable/item_subscription_btn"
-        android:backgroundTint="@color/color_off_white"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:text="@string/cancel"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_buy"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/item_subscription_btn"
         android:backgroundTint="@color/color_parrot_green"
         android:text="Buy Now"
-        android:layout_marginEnd="@dimen/_20sdp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintEnd_toEndOf="@+id/third_btn_view"
+        app:layout_constraintTop_toBottomOf="@+id/third_btn_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

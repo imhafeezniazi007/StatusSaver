@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
@@ -37,7 +38,9 @@ public class SubscriptionActivity extends AppCompatActivity {
 
     ActivitySubscriptionBinding activitySubscriptionBinding;
     private static final String PREF_NAME = "MyPrefs";
-    private static final String SUBSCRIBED_KEY = "subscribed";
+    private static final String ONE_MONTH = "monthly_subscribed";
+    private static final String ONE_YEAR = "yearly_subscribed";
+    private static final String ONE_TIME = "one_time_purchased";
     private static final String LAST_SHOWN_KEY = "lastShown";
     private SharedPreferences sharedPreferences;
     private BillingClient billingClient;
@@ -57,7 +60,6 @@ public class SubscriptionActivity extends AppCompatActivity {
                 .enablePendingPurchases()
                 .build();
 
-        Log.e("TAG", "onCreate: "+billingClient);
         activitySubscriptionBinding.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +91,7 @@ public class SubscriptionActivity extends AppCompatActivity {
         activitySubscriptionBinding.btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "onClick: buy btn clicked");
                 if (plan != null) {
-                    Log.d("TAG", "onClick: Plan selected: " + plan);
                     querySkuDetails();
                 } else {
                     Log.e("TAG", "onClick: Plan is null");
@@ -101,14 +101,28 @@ public class SubscriptionActivity extends AppCompatActivity {
     }
 
     private void selectPlan(String price, String skuType, View v) {
-
         Drawable normalBackground = getResources().getDrawable(R.drawable.btn_normal);
         activitySubscriptionBinding.firstBtnView.setBackground(normalBackground);
         activitySubscriptionBinding.secondBtnView.setBackground(normalBackground);
         activitySubscriptionBinding.thirdBtnView.setBackground(normalBackground);
 
+        // Reset text color of all text views inside the buttons
+        activitySubscriptionBinding.tvOneMonth.setTextColor(Color.WHITE);
+        activitySubscriptionBinding.tvRateOneMonth.setTextColor(Color.WHITE);
+        activitySubscriptionBinding.tvOneYear.setTextColor(Color.WHITE);
+        activitySubscriptionBinding.tvRateOneYear.setTextColor(Color.WHITE);
+        activitySubscriptionBinding.tvOneTime.setTextColor(Color.WHITE);
+        activitySubscriptionBinding.tvRateOneTime.setTextColor(Color.WHITE);
+
+        // Set background color and text color for the selected button
         Drawable greenBackground = getResources().getDrawable(R.drawable.btn_green_background);
         v.setBackground(greenBackground);
+        if (v instanceof TextView) {
+            ((TextView) v).setTextColor(Color.BLACK);
+        } else {
+            Log.e("Error", "View is not a TextView");
+        }
+
         plan = price;
     }
 
@@ -138,7 +152,21 @@ public class SubscriptionActivity extends AppCompatActivity {
                     .build();
             billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
             Toast.makeText(this, "Purchased", Toast.LENGTH_SHORT).show();
-            grantAccessToApp();
+
+            String sku = purchase.getSkus().get(0);
+            switch (sku) {
+                case "one_month_subscription":
+                    grantAccessToApp(ONE_MONTH);
+                    break;
+                case "one_year_subscription":
+                    grantAccessToApp(ONE_YEAR);
+                    break;
+                case "one_time_purchase":
+                    grantAccessToApp(ONE_TIME);
+                    break;
+                default:
+                    break;
+            }
         } else {
             Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
         }
@@ -216,7 +244,6 @@ public class SubscriptionActivity extends AppCompatActivity {
         });
     }
 
-
     private void onCancelClick() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(LAST_SHOWN_KEY, Calendar.getInstance().getTimeInMillis() + (3 * 24 * 60 * 60 * 1000));
@@ -230,15 +257,14 @@ public class SubscriptionActivity extends AppCompatActivity {
         finish();
     }
 
-    private void grantAccessToApp() {
+    private void grantAccessToApp(String subscriptionType) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(SUBSCRIBED_KEY, true);
+        editor.putBoolean(subscriptionType, true);
         editor.apply();
 
         startActivity(new Intent(SubscriptionActivity.this, MainFeaturesActivity.class));
         finish();
     }
-
 
     AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = billingResult -> {
         Toast.makeText(SubscriptionActivity.this, "Acknowledged", Toast.LENGTH_SHORT).show();
