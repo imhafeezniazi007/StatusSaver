@@ -40,4 +40,6 @@
     <string name="url">URL</string>
     <string name="html_content_second">For more information please visit our Privacy Policy.</string>
     <string name="agreement">I have read and agree to the privacy policy</string>
+    <string name="navigation_drawer_open">Navigation drawer open</string>
+    <string name="navigation_drawer_close">Navigation drawer close</string>
 </resources>

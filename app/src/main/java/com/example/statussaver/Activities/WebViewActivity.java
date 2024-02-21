@@ -18,6 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.ProgressImageDialog;
 import com.example.statussaver.databinding.ActivityWebViewBinding;
 import com.google.android.gms.ads.AdError;
@@ -33,7 +34,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     ActivityWebViewBinding binding;
     ProgressImageDialog progressDialog;
-    private InterstitialAd interstitialAd;
+    private AdManager adManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class WebViewActivity extends AppCompatActivity {
 
         hideElementsByClassName(binding.webView);
 
-        showAd();
+        //showOpenAppAd();
+
         progressDialog = new ProgressImageDialog(WebViewActivity.this);
         progressDialog.show();
 
@@ -80,7 +82,8 @@ public class WebViewActivity extends AppCompatActivity {
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WebViewActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(WebViewActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -88,30 +91,6 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void showAd() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd loadedInterstitialAd) {
-                        interstitialAd = loadedInterstitialAd;
-                        Log.i("TAG", "onAdLoaded");
-                        // Show the ad here
-                        if (interstitialAd != null) {
-                            interstitialAd.show(WebViewActivity.this);
-                        } else {
-                            Log.d("TAG", "The interstitial ad wasn't ready yet.");
-                        }
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        Log.d("TAG", loadAdError.toString());
-                        interstitialAd = null;
-                    }
-
-                });
     }
 
 
@@ -140,5 +119,13 @@ public class WebViewActivity extends AppCompatActivity {
         });
 
         webView.loadUrl("https://web.whatsapp.com/");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adManager = new AdManager(WebViewActivity.this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+        finish();
     }
 }

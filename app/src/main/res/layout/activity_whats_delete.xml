@@ -177,18 +177,17 @@
 
     </RelativeLayout>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:id="@+id/nativeWhatsDeleteAd"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/item_rectangle_design"
+        android:padding="@dimen/_8sdp"
+        app:gnt_template_type="@layout/gnt_medium_template_view"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout_4"
         app:layout_constraintStart_toStartOf="@+id/relativeLayout_4"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout_4"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
         />
 
     <RelativeLayout
@@ -200,7 +199,7 @@
         android:background="@drawable/item_whatsdelete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adView">
+        app:layout_constraintTop_toBottomOf="@+id/nativeWhatsDeleteAd">
 
         <ImageView
             android:id="@+id/document_icon"

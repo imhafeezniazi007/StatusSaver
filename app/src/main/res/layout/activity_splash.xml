@@ -7,6 +7,19 @@
     android:background="@color/white"
     tools:context=".Activities.SplashActivity">
 
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:id="@+id/nativeSplashAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:background="@drawable/item_rectangle_design"
+        android:padding="@dimen/_8sdp"
+        app:gnt_template_type="@layout/gnt_small_template_view"
+        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="@dimen/_150sdp"

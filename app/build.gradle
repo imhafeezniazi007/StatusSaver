@@ -37,10 +37,13 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.google.android.gms:play-services-ads-lite:22.6.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.hbb20:ccp:2.7.3'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.google.android.gms:play-services-ads:22.6.0'
+    implementation project(':nativetemplates')
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }

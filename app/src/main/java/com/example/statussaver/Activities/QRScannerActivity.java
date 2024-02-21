@@ -27,7 +27,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.statussaver.Adapters.QRScanAdapter;
 import com.example.statussaver.Models.QRScan;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.DBHelper;
+import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
 import com.google.zxing.MultiFormatReader;
@@ -64,6 +66,7 @@ public class QRScannerActivity extends AppCompatActivity {
     private ListView listView;
     private List<QRScan> qrCodes;
     private QRScanAdapter adapter;
+    private AdManager adManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +81,8 @@ public class QRScannerActivity extends AppCompatActivity {
         activityQrscannerBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QRScannerActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(QRScannerActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -151,6 +155,15 @@ public class QRScannerActivity extends AppCompatActivity {
 
             }
         });
+
+        showNativeAd();
+    }
+
+    private void showNativeAd() {
+        TemplateView nativeAdView = activityQrscannerBinding.nativeSplashAd;
+
+        adManager = new AdManager(QRScannerActivity.this, nativeAdView);
+        adManager.showAd(AdManager.AdType.NATIVE);
     }
 
     public void pickImageFromGallery(View view) {
@@ -230,5 +243,13 @@ public class QRScannerActivity extends AppCompatActivity {
         } catch (ChecksumException | FormatException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adManager = new AdManager(QRScannerActivity.this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+        finish();
     }
 }

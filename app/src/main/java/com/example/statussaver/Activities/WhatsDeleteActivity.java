@@ -17,12 +17,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.Utils.NotificationDAO;
 import com.example.statussaver.Utils.NotificationDatabase;
 import com.example.statussaver.Utils.NotificationListenService;
 import com.example.statussaver.Utils.RecursiveFileObserver;
 import com.example.statussaver.databinding.ActivityWhatsDeleteBinding;
+import com.google.android.ads.nativetemplates.TemplateView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +37,7 @@ public class WhatsDeleteActivity extends AppCompatActivity {
     ActivityWhatsDeleteBinding activityWhatsDeleteBinding;
     NotificationDAO notificationDAO;
     private static final int REQUEST_NOTIFICATION_ACCESS = 1;
+    private AdManager adManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +67,8 @@ public class WhatsDeleteActivity extends AppCompatActivity {
         activityWhatsDeleteBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WhatsDeleteActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(WhatsDeleteActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -76,6 +80,14 @@ public class WhatsDeleteActivity extends AppCompatActivity {
         setClickListener(activityWhatsDeleteBinding.relativeLayout5, DocumentActivity.class);
         setClickListener(activityWhatsDeleteBinding.relativeLayout6, VoiceActivity.class);
 
+        showNativeAd();
+    }
+
+    private void showNativeAd() {
+        TemplateView nativeAdView = activityWhatsDeleteBinding.nativeWhatsDeleteAd;
+
+        adManager = new AdManager(this, nativeAdView);
+        adManager.showAd(AdManager.AdType.NATIVE);
     }
 
     private void setClickListener(View view, final Class<?> activityClass) {
@@ -137,7 +149,8 @@ public class WhatsDeleteActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(WhatsDeleteActivity.this, MainFeaturesActivity.class));
+        adManager = new AdManager(this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
         finish();
     }
 }

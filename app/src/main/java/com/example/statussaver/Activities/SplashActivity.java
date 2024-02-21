@@ -11,8 +11,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.ProgressImageDialog;
 import com.example.statussaver.databinding.ActivitySplashBinding;
+import com.google.android.ads.nativetemplates.TemplateView;
 
 import java.util.Calendar;
 
@@ -27,6 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private static final String KEY_FIRST_TIME = "isFirstTime";
     private SharedPreferences sharedPrefs;
+    private AdManager adManager;
 
 
     @Override
@@ -66,6 +69,15 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+        showNativeAd();
+
+    }
+
+    private void showNativeAd() {
+        TemplateView nativeAdView = binding.nativeSplashAd;
+
+        adManager = new AdManager(SplashActivity.this, nativeAdView);
+        adManager.showAd(AdManager.AdType.NATIVE);
     }
 
     private void startMainActivity() {

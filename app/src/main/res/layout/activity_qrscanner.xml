@@ -53,22 +53,36 @@
         app:layout_constraintStart_toStartOf="@+id/scrollView3"
         app:layout_constraintTop_toBottomOf="@+id/result_tv" />
 
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:id="@+id/nativeSplashAd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16sdp"
+        android:background="@drawable/item_rectangle_design"
+        android:padding="@dimen/_8sdp"
+        app:gnt_template_type="@layout/gnt_small_template_view"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_textfound" />
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result_tv">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data"
-            android:background="@color/white"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/_8sdp" />
+            android:layout_margin="@dimen/_8sdp"
+            android:background="@color/white"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp" />
 
     </ScrollView>
 

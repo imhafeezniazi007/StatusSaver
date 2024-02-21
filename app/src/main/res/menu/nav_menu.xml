@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_one"
+            android:title="Share"
+            android:iconTint="@color/white"/>
+        <item
+            android:id="@+id/nav_item_two"
+            android:title="Feedback"
+            android:iconTint="@color/white"/>
+        <item
+            android:id="@+id/nav_item_three"
+            android:title="Privacy Policy"
+            android:iconTint="@color/white"/>
+        <item
+            android:id="@+id/nav_item_four"
+            android:title="Rate us"
+            android:iconTint="@color/white"/>
+    </group>
+</menu>

@@ -20,6 +20,7 @@ import com.example.statussaver.Fragments.SavedImageFragment;
 import com.example.statussaver.Fragments.SavedVideoFragment;
 import com.example.statussaver.Models.MediaFile;
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.databinding.ActivitySavedStatusBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -33,6 +34,7 @@ public class SavedStatusActivity extends AppCompatActivity {
     ActivitySavedStatusBinding activitySavedStatusBinding;
     ArrayList<MediaFile> arrayList;
     SavedStatusAdapter savedStatusAdapter;
+    private AdManager adManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,13 @@ public class SavedStatusActivity extends AppCompatActivity {
         activitySavedStatusBinding.tabLayout.addTab(activitySavedStatusBinding.tabLayout.newTab().setText("Pics"));
         activitySavedStatusBinding.tabLayout.addTab(activitySavedStatusBinding.tabLayout.newTab().setText("Videos"));
         activitySavedStatusBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
+        showBannerAd();
 
         activitySavedStatusBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SavedStatusActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(SavedStatusActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -87,6 +91,11 @@ public class SavedStatusActivity extends AppCompatActivity {
 
     }
 
+    private void showBannerAd() {
+        adManager = new AdManager(SavedStatusActivity.this);
+        adManager.showAd(AdManager.AdType.BANNER);
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
@@ -117,5 +126,13 @@ public class SavedStatusActivity extends AppCompatActivity {
         intent.putExtra("title", status.getName());
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adManager = new AdManager(SavedStatusActivity.this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+        finish();
     }
 }

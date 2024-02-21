@@ -19,6 +19,7 @@ import com.example.statussaver.Fragments.VideoFragment;
 import com.example.statussaver.Fragments.VideoStatusViewFragment;
 import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.databinding.ActivityBusinessStatusBinding;
 import com.example.statussaver.databinding.ActivitySavedStatusBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -28,6 +29,7 @@ import java.io.Serializable;
 public class BusinessStatusActivity extends AppCompatActivity {
 
     ActivityBusinessStatusBinding activityBusinessStatusBinding;
+    private AdManager adManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,8 @@ public class BusinessStatusActivity extends AppCompatActivity {
         activityBusinessStatusBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BusinessStatusActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(BusinessStatusActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -114,5 +117,13 @@ public class BusinessStatusActivity extends AppCompatActivity {
         transaction.addToBackStack(null);
         transaction.commit();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adManager = new AdManager(this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+        finish();
     }
 }

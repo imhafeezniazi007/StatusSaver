@@ -2,10 +2,13 @@ package com.example.statussaver.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -17,6 +20,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,6 +35,7 @@ import com.example.statussaver.Activities.WhatsDeleteActivity;
 import com.example.statussaver.R;
 import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.databinding.ActivityMainFeaturesBinding;
+import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -41,6 +47,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.material.navigation.NavigationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -56,6 +63,9 @@ public class MainFeaturesActivity extends AppCompatActivity {
 
     ActivityMainFeaturesBinding binding;
     private InterstitialAd interstitialAd;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private NavigationView navigationView;
     private int CHECK_PERMISSIONS;
     private AdManager adManager;
 
@@ -68,7 +78,22 @@ public class MainFeaturesActivity extends AppCompatActivity {
         binding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(binding.toolbar);
 
-        loadBannerAd();
+        //loadBannerAd();
+
+        drawerLayout = binding.drawerLayout;
+        navigationView = binding.navView;
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             requestPermissionsIfNecessary();
@@ -76,10 +101,52 @@ public class MainFeaturesActivity extends AppCompatActivity {
             requestLegacyPermissions();
         }
 
+        showNativeAd();
+        //showInterstitialAd();
 
-        showInterstitialAd();
+        //showAppOpenAd();
 
+        showNavigation();
         setOnClickListenersForCards();
+    }
+
+    private void showAppOpenAd() {
+        adManager = new AdManager(MainFeaturesActivity.this);
+        adManager.showAd(AdManager.AdType.OPENAPP);
+    }
+
+    private void showNavigation() {
+        Menu menu = navigationView.getMenu();
+
+        menu.findItem(R.id.nav_item_one).setIcon(R.drawable.share);
+        menu.findItem(R.id.nav_item_two).setIcon(R.drawable.feedback);
+        menu.findItem(R.id.nav_item_three).setIcon(R.drawable.privacy_policy);
+        menu.findItem(R.id.nav_item_four).setIcon(R.drawable.rate);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.nav_item_one) {
+
+                } else if (menuItem.getItemId() == R.id.nav_item_two) {
+
+                } else if (menuItem.getItemId() == R.id.nav_item_three) {
+
+                } else if (menuItem.getItemId() == R.id.nav_item_four) {
+
+                }
+
+                menuItem.setChecked(true);
+                setTitle(menuItem.getTitle());
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
+    private void showNativeAd() {
+        TemplateView nativeAdView = binding.nativeMainad;
+
+        AdManager adManager = new AdManager(this, nativeAdView);
+        adManager.showAd(AdManager.AdType.NATIVE);
     }
 
 
@@ -191,7 +258,11 @@ public class MainFeaturesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+            finish();
+        }
     }
 }

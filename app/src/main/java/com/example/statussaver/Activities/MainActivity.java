@@ -29,6 +29,7 @@ import com.example.statussaver.Fragments.VideoFragment;
 import com.example.statussaver.Fragments.VideoStatusViewFragment;
 import com.example.statussaver.Models.Status;
 import com.example.statussaver.R;
+import com.example.statussaver.Utils.AdManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -42,6 +43,7 @@ import com.example.statussaver.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding activityMainBinding;
+    private AdManager adManager;
 
 
     @Override
@@ -61,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainFeaturesActivity.class));
+                adManager = new AdManager(MainActivity.this);
+                adManager.showAd(AdManager.AdType.INTERSTITIAL);
                 finish();
             }
         });
@@ -130,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(activityMainBinding.fragmentContainer.getId(), videoStatusViewFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        adManager = new AdManager(this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+        finish();
     }
 }
