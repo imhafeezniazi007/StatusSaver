@@ -40,7 +40,6 @@ public class SavedImageViewActivity extends AppCompatActivity {
         activitySavedImageViewBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SavedImageViewActivity.this, SavedStatusActivity.class));
                 finish();
             }
         });

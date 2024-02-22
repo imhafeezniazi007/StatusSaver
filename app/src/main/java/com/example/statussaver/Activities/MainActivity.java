@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.toolbar.setNavigationIcon(R.drawable.back);
         activityMainBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
 
+
+        showBannerAd();
+        adManager = new AdManager(this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
+
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Pics"));
         activityMainBinding.tabLayout.addTab(activityMainBinding.tabLayout.newTab().setText("Videos"));
         activityMainBinding.tabLayout.setBackgroundColor(Color.parseColor("#00CC77"));
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
 
         replaceFragment(new ImageFragment());
 
@@ -99,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void showBannerAd() {
+        AdView adView = activityMainBinding.adView;
+        adManager = new AdManager(MainActivity.this, adView);
+        adManager.showAd(AdManager.AdType.BANNER);
+    }
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);

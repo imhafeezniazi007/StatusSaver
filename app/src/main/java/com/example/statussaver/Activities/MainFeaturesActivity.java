@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -23,6 +25,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.statussaver.Activities.BusinessStatusActivity;
@@ -68,6 +72,10 @@ public class MainFeaturesActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private int CHECK_PERMISSIONS;
     private AdManager adManager;
+    private AppCompatButton btnExit, btnCancel, btnFeedback;
+    private EditText subjectEt, messageEt;
+    private ImageView imageView;
+    private boolean isFirstBack = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +85,6 @@ public class MainFeaturesActivity extends AppCompatActivity {
         binding.toolbar.setTitle("Whatscan");
         binding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(binding.toolbar);
-
-        //loadBannerAd();
 
         drawerLayout = binding.drawerLayout;
         navigationView = binding.navView;
@@ -102,19 +108,10 @@ public class MainFeaturesActivity extends AppCompatActivity {
         }
 
         showNativeAd();
-        //showInterstitialAd();
-
-        //showAppOpenAd();
 
         showNavigation();
         setOnClickListenersForCards();
     }
-
-    private void showAppOpenAd() {
-        adManager = new AdManager(MainFeaturesActivity.this);
-        adManager.showAd(AdManager.AdType.OPENAPP);
-    }
-
     private void showNavigation() {
         Menu menu = navigationView.getMenu();
 
@@ -122,17 +119,76 @@ public class MainFeaturesActivity extends AppCompatActivity {
         menu.findItem(R.id.nav_item_two).setIcon(R.drawable.feedback);
         menu.findItem(R.id.nav_item_three).setIcon(R.drawable.privacy_policy);
         menu.findItem(R.id.nav_item_four).setIcon(R.drawable.rate);
+        menu.findItem(R.id.nav_item_five).setIcon(R.drawable.send);
+        menu.findItem(R.id.nav_item_six).setIcon(R.drawable.whatsweb_icon_drawer);
+        menu.findItem(R.id.nav_item_seven).setIcon(R.drawable.qrscanner_drawer);
+        menu.findItem(R.id.nav_item_eight).setIcon(R.drawable.premium);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.nav_item_one) {
 
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, "market://details?id=com.whatsapp");
+                    intent.setType("text/plain");
+                    startActivity(Intent.createChooser(intent, "Share link via"));
+
                 } else if (menuItem.getItemId() == R.id.nav_item_two) {
+                    setContentView(R.layout.layout_feedback);
+
+                    btnFeedback = findViewById(R.id.btn_feedback);
+                    messageEt = findViewById(R.id.message_feedback);
+                    subjectEt = findViewById(R.id.subject_feedback);
+
+                    btnFeedback.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String recipientEmail = getString(R.string.email_feedback);
+
+                            Intent intent = new Intent(Intent.ACTION_SENDTO);
+                            intent.setData(Uri.parse("mailto:"));
+                            intent.putExtra(Intent.EXTRA_EMAIL, recipientEmail);
+                            intent.putExtra(Intent.EXTRA_SUBJECT, subjectEt.getText());
+                            intent.putExtra(Intent.EXTRA_TEXT, messageEt.getText());
+                            if (subjectEt.getText().equals("")){
+                                subjectEt.setError("Please enter text");
+                            }
+                            else if (messageEt.getText().equals(""))
+                            {
+                                messageEt.setError("Please enter text");
+                            }
+                            else {
+                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(intent);
+                                }
+                            }
+                        }
+                    });
 
                 } else if (menuItem.getItemId() == R.id.nav_item_three) {
+                    String privacy_policy_website = getString(R.string.privacy_policy_website);
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(privacy_policy_website));
+                    startActivity(intent);
 
                 } else if (menuItem.getItemId() == R.id.nav_item_four) {
 
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("market://details?id=com.whatsapp"));
+                    startActivity(intent);
+                }
+                else if (menuItem.getItemId() == R.id.nav_item_five) {
+                    binding.cardView3.performClick();
+                }
+                else if (menuItem.getItemId() == R.id.nav_item_six) {
+                    binding.cardView.performClick();
+                }
+                else if (menuItem.getItemId() == R.id.nav_item_seven) {
+                    binding.cardView5.performClick();
+                }
+                else if (menuItem.getItemId() == R.id.nav_item_eight) {
+                    startActivity(new Intent(MainFeaturesActivity.this, SubscriptionActivity.class));
                 }
 
                 menuItem.setChecked(true);
@@ -191,9 +247,7 @@ public class MainFeaturesActivity extends AppCompatActivity {
                         .withListener(new MultiplePermissionsListener() {
                             @Override
                             public void onPermissionsChecked(MultiplePermissionsReport report) {
-                                if (!report.areAllPermissionsGranted()) {
-                                    requestForPermissions();
-                                }
+
                             }
                             @Override
                             public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
@@ -256,13 +310,52 @@ public class MainFeaturesActivity extends AppCompatActivity {
         setClickListener(binding.cardView7, SavedStatusActivity.class);
     }
 
+    private void exitActivity()
+    {
+        btnCancel = findViewById(R.id.btnBtnCancel);
+        btnExit = findViewById(R.id.btnBtnExit);
+        imageView = findViewById(R.id.rating_img);
+
+        TemplateView nativeAdView = findViewById(R.id.nativeExitAd);
+
+        AdManager adManager = new AdManager(this, nativeAdView);
+        adManager.showAd(AdManager.AdType.NATIVE);
+        imageView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=com.whatsapp"));
+            startActivity(intent);
+            finish();
+        }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isFirstBack = true;
+                setContentView(binding.getRoot());
+            }
+        });
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-            finish();
+        } else if (isFirstBack) {
+            isFirstBack = false;
+            setContentView(R.layout.layout_exit_screen);
+            exitActivity();
         }
+        else {
+            super.onBackPressed();
+        }
+
     }
 }

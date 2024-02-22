@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.statussaver.Activities.ImageActivity;
 import com.example.statussaver.Adapters.BusinessImageAdapter;
 import com.example.statussaver.Adapters.ImageAdapter;
 import com.example.statussaver.Models.Status;
@@ -77,26 +78,22 @@ public class BusinessImageFragment extends Fragment {
 
 
     private void loadPictureStatuses() {
-        if (Consts.STATUS_DIRECTORY_BUSINESS.exists())
-        {
+        if (Consts.STATUS_DIRECTORY_BUSINESS.exists()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     File[] statusFiles = Consts.STATUS_DIRECTORY_BUSINESS.listFiles();
 
-                    if (statusFiles!=null && statusFiles.length>0)
-                    {
+                    if (statusFiles != null && statusFiles.length > 0) {
                         Arrays.sort(statusFiles);
 
-                        for (final File statusFile:statusFiles)
-                        {
+                        for (final File statusFile : statusFiles) {
                             Status status = new Status(statusFile, statusFile.getName(),
                                     statusFile.getAbsolutePath());
 
                             status.setThumbnail(getThumbnail(status));
 
-                            if (!status.isVideo())
-                            {
+                            if (!status.isVideo()) {
                                 arrayList.add(status);
                             }
                         }
@@ -104,26 +101,33 @@ public class BusinessImageFragment extends Fragment {
                             @Override
                             public void run() {
                                 fragmentBusinessImageBinding.imageProgressBar.setVisibility(View.GONE);
-                                businessImageAdapter = new BusinessImageAdapter(arrayList, getContext(),BusinessImageFragment.this);
+                                businessImageAdapter = new BusinessImageAdapter(arrayList, getContext(), BusinessImageFragment.this);
                                 new BusinessImageViewFragment(arrayList);
                                 fragmentBusinessImageBinding.imageRecyclerView.setAdapter(businessImageAdapter);
                                 businessImageAdapter.notifyDataSetChanged();
                             }
                         });
 
-                    }
-                    else {
+                    } else {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 fragmentBusinessImageBinding.imageProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(getContext(), "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "No file exist", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
             }).start();
+        } else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    fragmentBusinessImageBinding.imageProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

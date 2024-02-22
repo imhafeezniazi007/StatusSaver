@@ -1,6 +1,7 @@
 package com.example.statussaver.Utils;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -25,6 +26,8 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.ResponseInfo;
 import com.google.android.gms.ads.appopen.AppOpenAd;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.MediaView;
@@ -38,7 +41,7 @@ public class AdManager {
     private Activity mContext;
     private RewardedAd mRewardedAd;
     private TemplateView mNativeAdView;
-    private AppOpenAdManager appOpenAdManager;
+    private AdView mAdView;
     private InterstitialAd mInterstitialAd;
 
     public AdManager(Activity context) {
@@ -47,6 +50,10 @@ public class AdManager {
     public AdManager(Activity context, TemplateView adView) {
         mContext = context;
         mNativeAdView = adView;
+    }
+    public AdManager(Activity context, AdView adView) {
+        mContext = context;
+        mAdView = adView;
     }
 
     public void showAd(AdType adType) {
@@ -63,62 +70,10 @@ public class AdManager {
             case NATIVE:
                 showNativeAd();
                 break;
-            case OPENAPP:
-                showOpenAppAd();
-                break;
             default:
                 break;
         }
     }
-
-
-    private class AppOpenAdManager {
-        private static final String LOG_TAG = "AppOpenAdManager";
-        private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921";
-
-        private AppOpenAd appOpenAd = null;
-        private boolean isLoadingAd = false;
-        private boolean isShowingAd = false;
-
-        public AppOpenAdManager() {}
-
-        public void loadAd() {
-
-            if (isLoadingAd || isAdAvailable()) {
-                return;
-            }
-
-            isLoadingAd = true;
-            AdRequest request = new AdRequest.Builder().build();
-            AppOpenAd.load(
-                    mContext, AD_UNIT_ID, request,
-                    AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
-                    new AppOpenAd.AppOpenAdLoadCallback() {
-                        @Override
-                        public void onAdLoaded(AppOpenAd ad) {
-                            // Called when an app open ad has loaded.
-                            Log.d(LOG_TAG, "Ad was loaded.");
-                            appOpenAd = ad;
-                            isLoadingAd = false;
-                        }
-
-                        @Override
-                        public void onAdFailedToLoad(LoadAdError loadAdError) {
-                            // Called when an app open ad has failed to load.
-                            Log.d(LOG_TAG, loadAdError.getMessage());
-                            isLoadingAd = false;
-                        }
-                    });
-        }
-        private boolean isAdAvailable() {
-            return appOpenAd != null;
-        }
-    }
-    private void showOpenAppAd() {
-        appOpenAdManager = new AppOpenAdManager();
-        appOpenAdManager.loadAd();
-    }
-
 
     private void showNativeAd() {
 
@@ -143,12 +98,15 @@ public class AdManager {
     }
 
     private void showBannerAd() {
-        AdView adView = new AdView(mContext);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+
+        MobileAds.initialize(mContext, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
 
         AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);
     }
 
     private void showInterstitialAd() {
@@ -200,7 +158,6 @@ public class AdManager {
         BANNER,
         INTERSTITIAL,
         REWARDED,
-        NATIVE,
-        OPENAPP
+        NATIVE
     }
 }

@@ -41,7 +41,6 @@ public class VoiceActivity extends AppCompatActivity {
         activityVoiceBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VoiceActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
@@ -91,13 +90,22 @@ public class VoiceActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 activityVoiceBinding.progressBar.setVisibility(View.GONE);
-                                Toast.makeText(VoiceActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(VoiceActivity.this, "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
             }).start();
+        }else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    activityVoiceBinding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(VoiceActivity.this, "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 

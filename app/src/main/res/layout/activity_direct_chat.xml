@@ -21,20 +21,6 @@
         app:layout_constraintTop_toTopOf="parent">
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.ads.nativetemplates.TemplateView
-        android:id="@+id/nativeDirectChatAd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
-        android:background="@drawable/item_rectangle_design"
-        android:padding="@dimen/_8sdp"
-        app:gnt_template_type="@layout/gnt_small_template_view"
-        app:layout_constraintBottom_toTopOf="@+id/dcConstraint1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dcConstraint1"
         android:layout_width="match_parent"
@@ -43,9 +29,9 @@
         android:background="@drawable/item_dc_rounded_corners"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <TextView
             android:id="@+id/textView"
@@ -65,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textAlignment="viewEnd"
+            app:ccpDialog_backgroundColor="@color/color_background"
             app:ccp_autoDetectCountry="true"
             app:ccp_defaultNameCode="PK"
             app:ccp_showFlag="true"
-            app:ccpDialog_backgroundColor="@color/color_background"
             app:ccp_showFullName="true"
             app:ccp_showNameCode="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,9 +73,9 @@
         android:background="@drawable/item_dc_rounded_corners"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dcConstraint1">
 
         <TextView
             android:id="@+id/textView2"
@@ -109,10 +95,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/item_dc_input_rounded"
             android:hint="Enter Number"
-            android:textColor="@color/black"
             android:inputType="phone"
+            android:textColorHint="@color/black"
             android:maxLines="1"
             android:padding="8dp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -123,23 +110,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_100sdp"
         android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/item_dc_message"
         android:orientation="vertical"
         android:padding="@dimen/_8sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <EditText
             android:id="@+id/textMessageDirectMessage"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Text message here"
+            android:layout_height="0dp"
             android:background="@android:color/transparent"
-            android:textColor="@color/black"
+            android:gravity="top"
+            android:hint="Text message here"
             android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
@@ -150,14 +139,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/dc_layer_btn"/>
+                android:src="@drawable/dc_layer_btn" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -168,5 +156,22 @@
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.google.android.ads.nativetemplates.TemplateView
+        android:id="@+id/nativeDirectChatAd"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_16sdp"
+        android:background="@drawable/item_rectangle_design"
+        android:minHeight="@dimen/_250sdp"
+        android:padding="@dimen/_8sdp"
+        app:gnt_template_type="@layout/gnt_medium_template_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@ public class QRScanAdapter extends RecyclerView.Adapter<QRScanAdapter.ViewHolder
         holder.binding.tvRecyclerDataDots.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, holder.itemView);
+                PopupMenu popupMenu = new PopupMenu(context, holder.binding.tvRecyclerDataDots);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
                 popupMenu.show();
 

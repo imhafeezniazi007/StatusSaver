@@ -23,6 +23,7 @@ import com.example.statussaver.R;
 import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.Consts;
 import com.example.statussaver.databinding.ActivitySavedStatusBinding;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -92,7 +93,8 @@ public class SavedStatusActivity extends AppCompatActivity {
     }
 
     private void showBannerAd() {
-        adManager = new AdManager(SavedStatusActivity.this);
+        AdView adView = activitySavedStatusBinding.adView;
+        adManager = new AdManager(SavedStatusActivity.this, adView);
         adManager.showAd(AdManager.AdType.BANNER);
     }
 

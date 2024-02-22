@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.statussaver.Activities.ImageActivity;
 import com.example.statussaver.Adapters.BusinessVideoAdapter;
 import com.example.statussaver.Adapters.VideoAdapter;
 import com.example.statussaver.Models.Status;
@@ -113,12 +114,20 @@ public class BusinessVideoFragment extends Fragment {
                             @Override
                             public void run() {
                                 binding.videoProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(getContext(), "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 }
             }).start();
+        }else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    binding.videoProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

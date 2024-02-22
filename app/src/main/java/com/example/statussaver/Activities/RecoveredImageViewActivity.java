@@ -41,7 +41,6 @@ public class RecoveredImageViewActivity extends AppCompatActivity {
         activityRecoveredImageViewBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RecoveredImageViewActivity.this, ImageActivity.class));
                 finish();
             }
         });

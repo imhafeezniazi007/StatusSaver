@@ -22,6 +22,7 @@ import com.example.statussaver.R;
 import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.databinding.ActivityBusinessStatusBinding;
 import com.example.statussaver.databinding.ActivitySavedStatusBinding;
+import com.google.android.gms.ads.AdView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
@@ -42,6 +43,11 @@ public class BusinessStatusActivity extends AppCompatActivity {
         activityBusinessStatusBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityBusinessStatusBinding.toolbar);
 
+
+        showBannerAd();
+
+        adManager = new AdManager(this);
+        adManager.showAd(AdManager.AdType.INTERSTITIAL);
 
         activityBusinessStatusBinding.tabLayout.addTab(activityBusinessStatusBinding.tabLayout.newTab().setText("Pics"));
         activityBusinessStatusBinding.tabLayout.addTab(activityBusinessStatusBinding.tabLayout.newTab().setText("Videos"));
@@ -118,6 +124,12 @@ public class BusinessStatusActivity extends AppCompatActivity {
         transaction.commit();
 
     }
+    private void showBannerAd() {
+        AdView adView = activityBusinessStatusBinding.adView;
+        adManager = new AdManager(BusinessStatusActivity.this, adView);
+        adManager.showAd(AdManager.AdType.BANNER);
+    }
+
 
     @Override
     public void onBackPressed() {

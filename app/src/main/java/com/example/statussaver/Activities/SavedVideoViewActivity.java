@@ -39,7 +39,6 @@ public class SavedVideoViewActivity extends AppCompatActivity {
         activitySavedVideoViewBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SavedVideoViewActivity.this, SavedStatusActivity.class));
                 finish();
             }
         });

@@ -45,7 +45,6 @@ public class ImageActivity extends AppCompatActivity {
         activityImageBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ImageActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
@@ -98,13 +97,22 @@ public class ImageActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 activityImageBinding.imageProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(ImageActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ImageActivity.this, "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
             }).start();
+        }else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    activityImageBinding.imageProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(ImageActivity.this, "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
     }
 

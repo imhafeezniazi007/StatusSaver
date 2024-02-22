@@ -45,7 +45,6 @@ public class VideoActivity extends AppCompatActivity {
         activityVideoBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(VideoActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
@@ -57,8 +56,7 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     private void loadVideoStatuses() {
-        if (Consts.REC_VID_DIR.exists())
-        {
+        if (Consts.REC_VID_DIR.exists()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -73,8 +71,7 @@ public class VideoActivity extends AppCompatActivity {
 
                             media.setThumbnail(getThumbnail(media));
 
-                            if (media.isVideo())
-                            {
+                            if (media.isVideo()) {
                                 videoArrayList.add(media);
                             }
                         }
@@ -88,18 +85,25 @@ public class VideoActivity extends AppCompatActivity {
                             }
                         });
 
-                    }
-                    else {
+                    } else {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 activityVideoBinding.videoProgressBar.setVisibility(View.GONE);
-                                Toast.makeText(VideoActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(VideoActivity.this, "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 }
             }).start();
+        } else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    activityVideoBinding.videoProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(VideoActivity.this, "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

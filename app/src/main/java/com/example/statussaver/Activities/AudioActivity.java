@@ -42,7 +42,6 @@ public class AudioActivity extends AppCompatActivity {
         activityAudioBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AudioActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
@@ -58,8 +57,7 @@ public class AudioActivity extends AppCompatActivity {
     }
 
     private void loadAudios() {
-        if (Consts.REC_AUD_DIR.exists())
-        {
+        if (Consts.REC_AUD_DIR.exists()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -73,7 +71,7 @@ public class AudioActivity extends AppCompatActivity {
                             MediaFile media = new MediaFile(mediaFile, mediaFile.getName(),
                                     mediaFile.getAbsolutePath());
 
-                                arrayList.add(media);
+                            arrayList.add(media);
                         }
                         handler.post(new Runnable() {
                             @Override
@@ -85,22 +83,28 @@ public class AudioActivity extends AppCompatActivity {
                             }
                         });
 
-                    }
-                    else {
+                    } else {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 activityAudioBinding.progressBar.setVisibility(View.GONE);
-                                Toast.makeText(AudioActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AudioActivity.this, "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
             }).start();
+        } else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    activityAudioBinding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(AudioActivity.this, "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
-
     public void navigateToIntent(MediaFile status)
     {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);

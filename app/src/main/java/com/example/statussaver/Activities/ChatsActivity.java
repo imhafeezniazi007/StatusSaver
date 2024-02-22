@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
@@ -36,27 +37,14 @@ public class ChatsActivity extends AppCompatActivity {
         activityChatsBinding = ActivityChatsBinding.inflate(getLayoutInflater());
         setContentView(activityChatsBinding.getRoot());
         activityChatsBinding.toolbar.setTitle("Chats");
-        activityChatsBinding.toolbar.setNavigationIcon(R.drawable.delete_icon);
+        activityChatsBinding.toolbar.setNavigationIcon(R.drawable.back);
         activityChatsBinding.toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(activityChatsBinding.toolbar);
 
         activityChatsBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        notificationDAO.deleteAllNotifications();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        startActivity(new Intent(ChatsActivity.this, WhatsDeleteActivity.class));
-                        finish();
-                    }
-                }).start();
+                finish();
             }
         });
 
@@ -91,6 +79,7 @@ public class ChatsActivity extends AppCompatActivity {
                 }
             }
             return senderAndLatestTextList;
+
         }
 
         @Override

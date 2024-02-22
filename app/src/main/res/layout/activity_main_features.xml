@@ -12,6 +12,7 @@
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_background"
@@ -414,9 +415,13 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
@@ -428,6 +433,5 @@
         android:background="@drawable/background_nav_bar"
         app:headerLayout="@layout/custom_nav_menu_item"
         app:menu="@menu/nav_menu"/>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

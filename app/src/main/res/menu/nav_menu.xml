@@ -1,21 +1,61 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/grp1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_eight"
+            android:title="Premium"
+            android:icon="@drawable/premium"/>
+    </group>
+    <group
+        android:id="@+id/grp6">
+        <item
+            android:id="@+id/nav_item_five"
+            android:title="Direct Chat"/>
+    </group>
+
+    <group
+        android:id="@+id/grp7">
+        <item
+            android:id="@+id/nav_item_six"
+            android:title="Whatsweb"
+            android:icon="@drawable/whatsweb_icon_drawer"/>
+    </group>
+    <group
+        android:id="@+id/grp8">
+        <item
+            android:id="@+id/nav_item_seven"
+            android:title="QR Scanner"
+            android:icon="@drawable/qrscanner_drawer"/>
+    </group>
+    <group
+        android:id="@+id/grp2">
         <item
             android:id="@+id/nav_item_one"
-            android:title="Share"
-            android:iconTint="@color/white"/>
+            android:title="Share"/>
+    </group>
+
+    <group
+        android:id="@+id/grp3">
         <item
             android:id="@+id/nav_item_two"
-            android:title="Feedback"
-            android:iconTint="@color/white"/>
+            android:title="Feedback"/>
+    </group>
+    <group
+        android:id="@+id/grp4">
         <item
             android:id="@+id/nav_item_three"
             android:title="Privacy Policy"
             android:iconTint="@color/white"/>
+    </group>
+    <group
+        android:id="@+id/grp5">
         <item
             android:id="@+id/nav_item_four"
             android:title="Rate us"
-            android:iconTint="@color/white"/>
+            android:icon="@drawable/rate"/>
     </group>
+
+
 </menu>

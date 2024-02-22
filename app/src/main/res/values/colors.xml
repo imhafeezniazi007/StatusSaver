@@ -19,4 +19,5 @@
     <color name="color_primary_green">#00CC77</color>
     <color name="color_parrot_green">#00FF75</color>
     <color name="color_off_white">#F6F6F6</color>
+    <color name="color_blue_exit">#5A76FF</color>
 </resources>

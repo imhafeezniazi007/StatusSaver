@@ -1,17 +1,11 @@
 package com.example.statussaver.Activities;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
+import android.app.Application;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,14 +15,7 @@ import com.example.statussaver.R;
 import com.example.statussaver.Utils.AdManager;
 import com.example.statussaver.Utils.ProgressImageDialog;
 import com.example.statussaver.databinding.ActivityWebViewBinding;
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.OnPaidEventListener;
-import com.google.android.gms.ads.ResponseInfo;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.gms.ads.MobileAds;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -65,8 +52,6 @@ public class WebViewActivity extends AppCompatActivity {
 
         hideElementsByClassName(binding.webView);
 
-        //showOpenAppAd();
-
         progressDialog = new ProgressImageDialog(WebViewActivity.this);
         progressDialog.show();
 
@@ -88,9 +73,6 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void showAd() {
     }
 
 

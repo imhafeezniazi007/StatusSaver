@@ -41,7 +41,6 @@ public class DocumentActivity extends AppCompatActivity {
         activityDocumentBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DocumentActivity.this, WhatsDeleteActivity.class));
                 finish();
             }
         });
@@ -58,8 +57,7 @@ public class DocumentActivity extends AppCompatActivity {
     }
 
     private void loadDocuments() {
-        if (Consts.REC_DOC_DIR.exists())
-        {
+        if (Consts.REC_DOC_DIR.exists()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -85,19 +83,26 @@ public class DocumentActivity extends AppCompatActivity {
                             }
                         });
 
-                    }
-                    else {
+                    } else {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 activityDocumentBinding.progressBar.setVisibility(View.GONE);
-                                Toast.makeText(DocumentActivity.this, "Does not exist", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DocumentActivity.this, "No file found", Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 }
             }).start();
+        } else {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    activityDocumentBinding.progressBar.setVisibility(View.GONE);
+                    Toast.makeText(DocumentActivity.this, "No such folder exists", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

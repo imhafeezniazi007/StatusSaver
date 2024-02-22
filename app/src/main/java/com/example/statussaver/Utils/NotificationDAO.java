@@ -17,8 +17,9 @@ public interface NotificationDAO {
     @Query("SELECT DISTINCT senderName FROM notification_texts")
     List<String> getAllSenderNames();
 
-    @Query("SELECT * FROM notification_texts WHERE senderName = :senderName AND senderName <> 'WhatsApp'")
+    @Query("SELECT * FROM notification_texts WHERE senderName = :senderName")
     List<NotificationText> getAllMessagesForSender(String senderName);
+
     @Query("SELECT COUNT(DISTINCT senderName) FROM notification_texts")
     int getTotalSenders();
 
