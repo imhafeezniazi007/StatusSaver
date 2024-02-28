@@ -45,6 +45,10 @@
     <string name="rate_us">Rate Us!</string>
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit?</string>
     <string name="exit">Exit</string>
-    <string name="email_feedback">recipient@example.com</string>
-    <string name="privacy_policy_website">https://www.google.com</string>
+    <string name="email_feedback">rnmappsdev@gmail.com</string>
+    <string name="privacy_policy_website">https://rnmappsdev.blogspot.com/2024/02/rnm-apps-privacy-policy.html</string>
+    <string name="id_interstitial_ad"> </string>
+    <string name="id_rewarded_ad">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="id_native_ad"> </string>
+    <string name="no_items_found">No items found</string>
 </resources>

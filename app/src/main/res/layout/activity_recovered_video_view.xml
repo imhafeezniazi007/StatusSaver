@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.RecoveredVideoViewActivity">
+    android:background="@color/color_background"
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.RecoveredVideoViewActivity">
 
 
     <androidx.appcompat.widget.Toolbar

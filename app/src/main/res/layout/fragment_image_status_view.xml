@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ImageStatusViewFragment">
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Fragments.ImageStatusViewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrollView2"

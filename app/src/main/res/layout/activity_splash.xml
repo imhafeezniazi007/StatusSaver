@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".Activities.SplashActivity">
+    android:background="@color/color_background"
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.SplashActivity">
 
     <com.google.android.ads.nativetemplates.TemplateView
         android:id="@+id/nativeSplashAd"

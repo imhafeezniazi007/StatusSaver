@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".Activities.SavedStatusActivity">
+    android:background="@color/color_background"
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.SavedStatusActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

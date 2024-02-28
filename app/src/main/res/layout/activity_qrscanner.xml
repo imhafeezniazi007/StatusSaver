@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    tools:context=".Activities.QRScannerActivity">
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.QRScannerActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -21,37 +21,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/result_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/color_dark_green_transparent"
-        android:text="@string/copy_text"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/result_tv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/result_tv"
-        android:layout_margin="@dimen/_8sdp"
-        android:visibility="gone"/>
-
-    <TextView
-        android:id="@+id/tv_textfound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No data found. Open scanner to scan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/scrollView3"
-        app:layout_constraintTop_toBottomOf="@+id/result_tv" />
 
     <com.google.android.ads.nativetemplates.TemplateView
         android:id="@+id/nativeSplashAd"
@@ -61,24 +30,24 @@
         android:background="@drawable/item_rectangle_design"
         android:padding="@dimen/_8sdp"
         app:gnt_template_type="@layout/gnt_small_template_view"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_textfound" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_16sdp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nativeSplashAd">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_data"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
             android:background="@color/white"
             android:paddingStart="@dimen/_8sdp"
@@ -134,5 +103,18 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <TextView
+        android:id="@+id/text_no_item"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/color_background"
+        android:gravity="center"
+        android:text="@string/no_items_found"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
+        app:layout_constraintEnd_toEndOf="@id/scrollView3"
+        app:layout_constraintStart_toStartOf="@id/scrollView3"
+        app:layout_constraintTop_toTopOf="@+id/scrollView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

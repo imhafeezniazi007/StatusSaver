@@ -6,7 +6,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.MainFeaturesActivity">
+    android:background="@color/color_background"
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.MainFeaturesActivity">
 
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +17,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_background"
-    tools:context=".Activities.MainFeaturesActivity">
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.MainFeaturesActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -29,7 +30,18 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <ImageView
+            android:id="@+id/premium_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/premium"
+            android:layout_gravity="end"
+            android:padding="@dimen/_16sdp"
+            android:contentDescription="Logo"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

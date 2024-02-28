@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/color_background"
-    tools:context=".Activities.WhatsDeleteActivity">
+    tools:context="whatscan.whats.web.scanner.qrcodescanner.statussaver.Activities.WhatsDeleteActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

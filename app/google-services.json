@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1042910905558",
+    "project_id": "web-scanner-d6f39",
+    "storage_bucket": "web-scanner-d6f39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042910905558:android:02a1d7f5918a24d837f577",
+        "android_client_info": {
+          "package_name": "whatscan.whats.web.scanner.qrcodescanner.statussaver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1m4CRD_pm4gtX2C6aic-vvPVUk5s7J4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
